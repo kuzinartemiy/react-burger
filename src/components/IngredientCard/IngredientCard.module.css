@@ -1,0 +1,18 @@
+.ingredientCard {
+  min-height: 208px;
+  max-width: 272px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.ingredientCard__image {
+  max-width: 240px;
+}
+
+.ingredientCard__price {
+  margin: 8px 0px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
