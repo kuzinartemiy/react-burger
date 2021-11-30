@@ -2,6 +2,7 @@ import styles from './BurgerIngredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState } from 'react';
 import { IngredientsList } from '../IngredientsList/IngredientsList';
+import PropTypes from 'prop-types';
 
 export const BurgerIngredients = ({ingredients}) => {
   const [current, setCurrent] = useState('buns');
@@ -52,3 +53,8 @@ export const BurgerIngredients = ({ingredients}) => {
     </div>
   )
 }
+
+BurgerIngredients.propTypes = {
+  ingredients: PropTypes.arrayOf(PropTypes.object),
+};
+
