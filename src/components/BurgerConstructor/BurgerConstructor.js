@@ -2,10 +2,10 @@ import styles from './BurgerConstructor.module.css';
 import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 
-export const BurgerConstructor = ({ingredients}) => {
+export const BurgerConstructor = ({ingredients, openModal}) => {
   const selectedBun = ingredients[0]; //hardcode bun
   const filteredIngredients = ingredients.filter(ingredient => ingredient.type !== 'bun');
-
+  
   return (
     <div className={styles.burgerConstructor}>
       <div className={styles.burgerConstructor__elementWrapper}>
@@ -46,7 +46,7 @@ export const BurgerConstructor = ({ingredients}) => {
         <p className="text text_type_digits-medium">
           610<CurrencyIcon type="primary" />
         </p>
-        <Button type="primary" size="large">Оформить заказ</Button>
+        <Button onClick={openModal} type="primary" size="large">Оформить заказ</Button>
       </div>
     </div>
   )
@@ -54,4 +54,5 @@ export const BurgerConstructor = ({ingredients}) => {
 
 BurgerConstructor.propTypes = {
   ingredients: PropTypes.arrayOf(PropTypes.object),
+  openModal: PropTypes.func,
 }

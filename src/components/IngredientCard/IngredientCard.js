@@ -2,9 +2,9 @@ import styles from './IngredientCard.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 
-export const IngredientCard = ({ingredient}) => {
+export const IngredientCard = ({ingredient, openModal}) => {
   return (
-    <li className={styles.ingredientCard}>
+    <li onClick={() => openModal(ingredient)} className={styles.ingredientCard}>
       <img className={styles.ingredientCard__image} src={ingredient.image} alt={ingredient.image}/>
       <div className={styles.ingredientCard__price}>
         <p className="text text_type_digits-default">{ingredient.price}</p><CurrencyIcon type="primary" />
@@ -19,5 +19,6 @@ IngredientCard.propTypes = {
     image: PropTypes.string,
     price: PropTypes.number,
     name: PropTypes.string,
-  })
+  }),
+  openModal: PropTypes.func,
 }

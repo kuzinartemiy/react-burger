@@ -5,6 +5,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: .3s;
+  cursor: pointer;
+}
+
+.ingredientCard:hover {
+  opacity: .9;
 }
 .ingredientCard__image {
   max-width: 240px;

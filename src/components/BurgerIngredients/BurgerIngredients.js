@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { IngredientsList } from '../IngredientsList/IngredientsList';
 import PropTypes from 'prop-types';
 
-export const BurgerIngredients = ({ingredients}) => {
+export const BurgerIngredients = ({ingredients, openModal}) => {
   const [current, setCurrent] = useState('buns');
 
   const buns = ingredients.filter(ingredient => ingredient.type === 'bun');
@@ -28,25 +28,25 @@ export const BurgerIngredients = ({ingredients}) => {
       
       {current === 'buns' && 
         <div className={styles.burgerIngredients__tabsContent}>
-          <IngredientsList title="Булки" ingredients={buns} />
-          <IngredientsList title="Соусы" ingredients={sauces} />
-          <IngredientsList title="Начинки" ingredients={mains} />
+          <IngredientsList openModal={openModal} title="Булки" ingredients={buns} />
+          <IngredientsList openModal={openModal} title="Соусы" ingredients={sauces} />
+          <IngredientsList openModal={openModal} title="Начинки" ingredients={mains} />
         </div>
       }
       
       {current === 'sauces' && 
         <div className={styles.burgerIngredients__tabsContent}>
-          <IngredientsList title="Соусы" ingredients={sauces} />
-          <IngredientsList title="Начинки" ingredients={mains} />
-          <IngredientsList title="Булки" ingredients={buns} />
+          <IngredientsList openModal={openModal} title="Соусы" ingredients={sauces} />
+          <IngredientsList openModal={openModal} title="Начинки" ingredients={mains} />
+          <IngredientsList openModal={openModal} title="Булки" ingredients={buns} />
         </div>
       }
 
       {current === 'mains' && 
         <div className={styles.burgerIngredients__tabsContent}>
-          <IngredientsList title="Начинки" ingredients={mains} />
-          <IngredientsList title="Булки" ingredients={buns} />
-          <IngredientsList title="Соусы" ingredients={sauces} />
+          <IngredientsList openModal={openModal} title="Начинки" ingredients={mains} />
+          <IngredientsList openModal={openModal} title="Булки" ingredients={buns} />
+          <IngredientsList openModal={openModal} title="Соусы" ingredients={sauces} />
         </div>
       }
 
@@ -56,5 +56,6 @@ export const BurgerIngredients = ({ingredients}) => {
 
 BurgerIngredients.propTypes = {
   ingredients: PropTypes.arrayOf(PropTypes.object),
+  openModal: PropTypes.func,
 };
 

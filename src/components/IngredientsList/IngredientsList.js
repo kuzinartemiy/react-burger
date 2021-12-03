@@ -2,7 +2,7 @@ import styles from './IngredientsList.module.css';
 import { IngredientCard } from "../IngredientCard/IngredientCard"
 import PropTypes from 'prop-types';
 
-export const IngredientsList = ({title, ingredients}) => {
+export const IngredientsList = ({title, ingredients, openModal}) => {
   return (
     <div className={styles.ingredientsList__container}>
 
@@ -11,7 +11,7 @@ export const IngredientsList = ({title, ingredients}) => {
       <ul className={styles.ingredientsList__ingredients}>
         {ingredients.map(ingredient => {
           return (
-            <IngredientCard key={ingredient._id} ingredient={ingredient}/>
+            <IngredientCard openModal={openModal} key={ingredient._id} ingredient={ingredient}/>
           )
         })}
       </ul>
@@ -22,4 +22,5 @@ export const IngredientsList = ({title, ingredients}) => {
 IngredientsList.propTypes = {
   title: PropTypes.string,
   ingredients: PropTypes.arrayOf(PropTypes.object),
+  openModal: PropTypes.func,
 };
