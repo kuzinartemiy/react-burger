@@ -1,5 +1,6 @@
 import styles from './IngredientDetails.module.css';
 import PropTypes from 'prop-types';
+import { IngredientType } from '../../utils/types';
 
 export const IngredientDetails = ({ingredient}) => {
   return (
@@ -32,12 +33,5 @@ export const IngredientDetails = ({ingredient}) => {
 }
 
 IngredientDetails.propTypes = {
-  ingredient: PropTypes.shape({
-    image: PropTypes.string,
-    name: PropTypes.string,
-    calories: PropTypes.number,
-    proteins: PropTypes.number,
-    fat: PropTypes.number,
-    carbohydrates: PropTypes.number,
-  })
+  ingredient: PropTypes.shape(IngredientType).isRequired,
 }

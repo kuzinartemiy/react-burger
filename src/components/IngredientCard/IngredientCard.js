@@ -1,6 +1,7 @@
 import styles from './IngredientCard.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
+import { IngredientType } from '../../utils/types';
 
 export const IngredientCard = ({ingredient, openModal}) => {
   return (
@@ -15,10 +16,6 @@ export const IngredientCard = ({ingredient, openModal}) => {
 }
 
 IngredientCard.propTypes = {
-  ingredient: PropTypes.shape({
-    image: PropTypes.string,
-    price: PropTypes.number,
-    name: PropTypes.string,
-  }),
-  openModal: PropTypes.func,
+  ingredient: PropTypes.shape(IngredientType).isRequired,
+  openModal: PropTypes.func.isRequired,
 }

@@ -31,6 +31,6 @@ export const Modal = ({closeModal, children}) => {
 }
 
 Modal.propTypes = {
-  closeModal: PropTypes.func,
-  children: PropTypes.element,
+  closeModal: PropTypes.func.isRequired,
+  children: PropTypes.element.isRequired,
 }

@@ -1,6 +1,7 @@
 import styles from './IngredientsList.module.css';
 import { IngredientCard } from "../IngredientCard/IngredientCard"
 import PropTypes from 'prop-types';
+import { IngredientType } from '../../utils/types';
 
 export const IngredientsList = ({title, ingredients, openModal}) => {
   return (
@@ -20,7 +21,7 @@ export const IngredientsList = ({title, ingredients, openModal}) => {
 }
 
 IngredientsList.propTypes = {
-  title: PropTypes.string,
-  ingredients: PropTypes.arrayOf(PropTypes.object),
-  openModal: PropTypes.func,
+  title: PropTypes.string.isRequired,
+  ingredients: PropTypes.arrayOf(PropTypes.shape(IngredientType).isRequired).isRequired,
+  openModal: PropTypes.func.isRequired,
 };

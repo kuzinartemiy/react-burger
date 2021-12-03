@@ -46,7 +46,7 @@ function App() {
           <BurgerConstructor ingredients={ingredients} openModal={openAcceptedOrderInfoModal}/>
         </div>
       }
-      <div id="root-modal"/>
+      
 
       {isOrderInfoModalVisible && 
         <Modal closeModal={closeModal}>

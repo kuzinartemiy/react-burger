@@ -1,6 +1,7 @@
 import styles from './BurgerConstructor.module.css';
 import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
+import { IngredientType } from '../../utils/types';
 
 export const BurgerConstructor = ({ingredients, openModal}) => {
   const selectedBun = ingredients[0]; //hardcode bun
@@ -53,6 +54,6 @@ export const BurgerConstructor = ({ingredients, openModal}) => {
 }
 
 BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf(PropTypes.object),
-  openModal: PropTypes.func,
+  ingredients: PropTypes.arrayOf(PropTypes.shape(IngredientType).isRequired).isRequired,
+  openModal: PropTypes.func.isRequired,
 }
