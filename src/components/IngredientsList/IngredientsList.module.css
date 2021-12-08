@@ -1,0 +1,13 @@
+.ingredientsList__container {
+  margin-top: 40px;
+}
+
+.ingredientsList__ingredients {
+  padding: 0;
+  margin: 24px 0px 0px 0px;
+  list-style: none;
+  display: grid;
+  grid-template-columns: 272px 272px;
+  gap: 32px 24px;
+  justify-content: center;
+}
