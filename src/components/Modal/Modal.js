@@ -17,6 +17,7 @@ export const Modal = ({closeModal, children}) => {
     return () => {
       document.removeEventListener('keydown', closeModalByEsc);
     }
+    // eslint-disable-next-line
   }, [])
 
   return createPortal(

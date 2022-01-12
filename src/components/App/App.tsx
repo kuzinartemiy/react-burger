@@ -8,20 +8,27 @@ import { IngredientDetails } from '../IngredientDetails/IngredientDetails';
 import { SetStateAction, useEffect, useState } from 'react';
 import styles from './App.module.css';
 import Api from '../../utils/api';
+import { IngredientsContext } from '../../contexts/ingredientsContext';
 
 function App() {
   const [ingredients, setIngredients] = useState([]);
   const [isOrderInfoModalVisible, setOrderInfoModalOpen] = useState(false);
   const [isIngredientInfoModalOpen, setIngredientInfoModalOpen] = useState(false);
   const [selectedIngredient, setSelectedIngredient] = useState({});
+  const [orderId, setOrderId] = useState(0);
 
   const closeModal = () => {
     setOrderInfoModalOpen(false);
     setIngredientInfoModalOpen(false);
   }
 
-  const openAcceptedOrderInfoModal = () => {
-    setOrderInfoModalOpen(true);
+  const sendOrderHandler = (ingredients: Array<string>) => {
+    Api.sendOrder(ingredients)
+      .then(res => {
+        if(res.success) setOrderId(res.order.number);
+        setOrderInfoModalOpen(true);
+      })
+      .catch(error => console.log(`SEND_ORDER_ERROR: ${error}`));
   }
 
   const openIngredientInfoModal = (ingredient: SetStateAction<object>) => {
@@ -35,6 +42,7 @@ function App() {
         setIngredients(res.data);
       })
       .catch(error => console.log(`GET_INGREDIENTS_ERROR: ${error}`));
+      // eslint-disable-next-line
   }, [])
   
   return (
@@ -43,14 +51,15 @@ function App() {
       {ingredients.length !== 0 &&
         <div className={styles.appWrapper}>
           <BurgerIngredients ingredients={ingredients} openModal={openIngredientInfoModal}/>
-          <BurgerConstructor ingredients={ingredients} openModal={openAcceptedOrderInfoModal}/>
+          <IngredientsContext.Provider value={ingredients}>
+            <BurgerConstructor sendOrder={sendOrderHandler}/>
+          </IngredientsContext.Provider>
         </div>
       }
       
-
       {isOrderInfoModalVisible && 
         <Modal closeModal={closeModal}>
-          <OrderDetails/>
+          <OrderDetails orderId={orderId}/>
         </Modal>
       }
 
