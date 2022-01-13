@@ -1,0 +1,16 @@
+.errorMessage {
+  position: absolute;
+  top: 108px;
+  right: 20px;
+  width: 250px;
+  box-sizing: border-box;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: tomato;
+  opacity: 0;
+  transition: 1s;
+}
+
+.errorMessage_show {
+  opacity: 1;
+}

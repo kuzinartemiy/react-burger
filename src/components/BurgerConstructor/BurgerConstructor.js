@@ -1,8 +1,8 @@
 import styles from './BurgerConstructor.module.css';
 import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { useContext, useEffect, useState, useReducer } from 'react';
-import { IngredientsContext } from '../../contexts/ingredientsContext';
+import { useContext, useState, useReducer, useMemo } from 'react';
+import { IngredientsContext } from '../../services/ingredientsContext';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -19,9 +19,9 @@ export const BurgerConstructor = ({ sendOrder }) => {
   const [selectedIngredients, setSelectedIngredients] = useState(ingredients.filter(ingredient => ingredient.type !== 'bun'));
   const [orderTotalPrice, setTotalOrderPrice] = useReducer(reducer, selectedBun.price);
 
-  useEffect(() => {
+  useMemo(() => {
     setTotalOrderPrice({ type: 'calculateOrderTotalPrice', payload: selectedIngredients });
-  }, [ingredients]);
+  }, [selectedIngredients]);
 
   const handleSendOrder = () => {
     const ingredientsIds = [selectedBun._id];
@@ -40,7 +40,7 @@ export const BurgerConstructor = ({ sendOrder }) => {
           thumbnail={selectedBun.image}
         />
       </div>
-      
+
       <ul className={styles.burgerConstructor__ingredients}>
         {selectedIngredients.map(ingredient => {
           return (

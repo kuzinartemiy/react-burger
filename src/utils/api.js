@@ -12,7 +12,7 @@ class Api {
     };
   }
 
-  _getResponceData(res) {
+  _getResponseData(res) {
     if(!res.ok) {
       return Promise.reject(`Ошибка: ${res.status}`);
     }
@@ -24,7 +24,7 @@ class Api {
       method: 'GET',
       headers: this._headers,
     })
-      .then(this._getResponceData)
+      .then(this._getResponseData)
   }
 
   sendOrder(ingredients) {
@@ -35,7 +35,7 @@ class Api {
         ingredients,
       })
     })
-      .then(this._getResponceData)
+      .then(this._getResponseData)
   }
 }
 
