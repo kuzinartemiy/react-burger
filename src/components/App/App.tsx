@@ -16,10 +16,6 @@ function App() {
   const [selectedIngredient, setSelectedIngredient] = useState({});
   const [orderId, setOrderId] = useState(0);
   const [errorMessage, setErrorMessage] = useState('');
-  
-  useMemo(() => {
-    return <ErrorMessage errorMessage={errorMessage} />
-  }, [errorMessage]);
 
   const closeModal = () => {
     setSelectedIngredient({})
