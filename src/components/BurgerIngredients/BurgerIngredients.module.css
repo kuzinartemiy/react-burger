@@ -9,6 +9,7 @@
 
 .burgerIngredients__tabs {
   margin-top: 20px;
+  display: flex;
 }
 
 .burgerIngredients__tabsContent {
