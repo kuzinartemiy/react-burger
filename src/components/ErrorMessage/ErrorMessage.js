@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './ErrorMessage.module.css';
+import PropTypes from 'prop-types';
 
 export const ErrorMessage = ({ errorMessage }) => {
   const [errorMessageClassName, setErrorMessageClassName] = useState(styles.errorMessage);
@@ -14,4 +15,8 @@ export const ErrorMessage = ({ errorMessage }) => {
       <p className='text text_type_main-default'>{errorMessage}</p>
     </div>
   )
+}
+
+ErrorMessage.propTypes = {
+  errorMessage: PropTypes.string.isRequired,
 }

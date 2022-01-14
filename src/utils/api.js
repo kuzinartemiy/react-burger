@@ -1,6 +1,6 @@
 const URL_API = 'https://norma.nomoreparties.space/api';
 const INGREDIENTS = '/ingredients';
-const ORDERS = '/order';
+const ORDERS = '/orders';
 
 class Api {
   constructor({ baseUrl, ingredientsEndPoint, ordersEndPoint }) {

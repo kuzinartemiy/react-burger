@@ -6,7 +6,7 @@ import { OrderDetails } from '../OrderDetails/OrderDetails';
 import { IngredientDetails } from '../IngredientDetails/IngredientDetails';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 
-import { SetStateAction, useEffect, useMemo, useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import styles from './App.module.css';
 import Api from '../../utils/api';
 import { IngredientsContext } from '../../services/ingredientsContext';
