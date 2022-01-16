@@ -10,8 +10,10 @@ import { SetStateAction, useEffect, useState } from 'react';
 import styles from './App.module.css';
 import Api from '../../utils/api';
 import { IngredientsContext } from '../../services/ingredientsContext';
+import { Loader } from '../Loader/Loader';
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
   const [ingredients, setIngredients] = useState([]);
   const [selectedIngredient, setSelectedIngredient] = useState({});
   const [orderId, setOrderId] = useState(0);
@@ -46,6 +48,7 @@ function App() {
     Api.getIngredients()
       .then(res => {
         setIngredients(res.data);
+        setIsLoading(false);
       })
       .catch(error => {
         console.log(`GET_INGREDIENTS_ERROR: ${error}`);
@@ -57,27 +60,35 @@ function App() {
   return (
     <>
       <AppHeader/>
-      {ingredients.length !== 0 &&
-        <div className={styles.appWrapper}>
-          <BurgerIngredients ingredients={ingredients} openModal={openIngredientInfoModal}/>
-          <IngredientsContext.Provider value={ingredients}>
-            <BurgerConstructor sendOrder={sendOrderHandler}/>
-          </IngredientsContext.Provider>
-        </div>
+      {isLoading 
+        ? 
+        <Loader />
+        : 
+        <>
+          {ingredients.length !== 0 &&
+            <div className={styles.appWrapper}>
+              <BurgerIngredients ingredients={ingredients} openModal={openIngredientInfoModal}/>
+              <IngredientsContext.Provider value={ingredients}>
+                <BurgerConstructor sendOrder={sendOrderHandler}/>
+              </IngredientsContext.Provider>
+            </div>
+          }
+          
+          {orderId !== 0 && 
+            <Modal closeModal={closeModal}>
+              <OrderDetails orderId={orderId}/>
+            </Modal>
+          }
+    
+          {Object.keys(selectedIngredient).length !== 0 && 
+            <Modal closeModal={closeModal}>
+              <IngredientDetails ingredient={selectedIngredient}/>
+            </Modal>
+          }
+    
+        </>
       }
       
-      {orderId !== 0 && 
-        <Modal closeModal={closeModal}>
-          <OrderDetails orderId={orderId}/>
-        </Modal>
-      }
-
-      {Object.keys(selectedIngredient).length !== 0 && 
-        <Modal closeModal={closeModal}>
-          <IngredientDetails ingredient={selectedIngredient}/>
-        </Modal>
-      }
-
       {errorMessage && <ErrorMessage errorMessage={errorMessage}/>}
     </>
   );
