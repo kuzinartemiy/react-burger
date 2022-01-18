@@ -7,17 +7,17 @@ import PropTypes from 'prop-types';
 export const Modal = ({closeModal, children}) => {
   const rootModal = document.getElementById('root-modal');
 
-  const closeModalByEsc = (e) => {
-    e.key === 'Escape' && closeModal();
-  }
-
   useEffect(() => {
+    const closeModalByEsc = (e) => {
+      e.key === 'Escape' && closeModal();
+    }
+
     document.addEventListener('keydown', closeModalByEsc);
 
     return () => {
       document.removeEventListener('keydown', closeModalByEsc);
     }
-  }, [])
+  }, [closeModal])
 
   return createPortal(
     <div className={styles.modal__wrapper}>

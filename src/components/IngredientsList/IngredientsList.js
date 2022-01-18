@@ -3,9 +3,11 @@ import { IngredientCard } from "../IngredientCard/IngredientCard"
 import PropTypes from 'prop-types';
 import { IngredientType } from '../../utils/types';
 
-export const IngredientsList = ({title, ingredients, openModal}) => {
+export const IngredientsList = ({ title, ingredients, openModal }) => {
+  const ingredientId = ingredients[0].type + 's';
+
   return (
-    <div className={styles.ingredientsList__container}>
+    <div id={ingredientId} className={styles.ingredientsList__container}>
 
       <p className="text text_type_main-medium">{title}</p>
 

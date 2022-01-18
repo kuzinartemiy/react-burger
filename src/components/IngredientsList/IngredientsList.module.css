@@ -1,5 +1,6 @@
 .ingredientsList__container {
-  margin-top: 40px;
+  box-sizing: border-box;
+  padding-top: 40px;
 }
 
 .ingredientsList__ingredients {
