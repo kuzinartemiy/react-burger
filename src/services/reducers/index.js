@@ -11,7 +11,8 @@ import {
   SET_ERROR_MESSAGE, 
   SORT_INGREDIENT_IN_ORDER,
   SET_INGREDIENT_DETAILS,
-  SET_LOADING_ON
+  SET_LOADING_ON,
+  CLEAR_INGREDIENTS_IN_ORDER
   } from '../actions';
 
 const isLoading = (state = true, action) => {
@@ -74,6 +75,8 @@ const selectedIngredients = (state = initialSelectedIngredientsState, action) =>
         ...state,
         ingredients: [...state.ingredients.filter(ingredient => ingredient.customId !== action.payload)]
       };
+    case CLEAR_INGREDIENTS_IN_ORDER:
+      return initialSelectedIngredientsState;
     default:
       return state;
   }

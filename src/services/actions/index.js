@@ -11,7 +11,8 @@ export const CLEAR_INGREDIENT_DETAILS = 'CLEAR_INGREDIENT_DETAILS';
 
 export const ADD_INGREDIENT_TO_ORDER = 'ADD_INGREDIENT_TO_ORDER';
 export const DELETE_INGREDIENT_FROM_ORDER = 'DELETE_INGREDIENT_FROM_ORDER';
-export const SORT_INGREDIENT_IN_ORDER = 'MOVE_INSIDE_CONSTRUCTOR';
+export const SORT_INGREDIENT_IN_ORDER = 'SORT_INGREDIENT_IN_ORDER';
+export const CLEAR_INGREDIENTS_IN_ORDER = 'CLEAR_INGREDIENTS_IN_ORDER';
 
 export const SEND_ORDER = 'SEND_ORDER';
 export const CLEAR_ORDER_INFO = 'CLEAR_ORDER_INFO';
@@ -64,7 +65,8 @@ export const sendOrder = (ingredients) => {
       .then(res => {
         if(res.success) {
           dispatch({type: SEND_ORDER, payload: res});
-          dispatch({ type: SET_LOADING_OFF });
+          dispatch({type: CLEAR_INGREDIENTS_IN_ORDER});
+          dispatch(setLoading(false));
         } else {
           throw Error(res);
         }
