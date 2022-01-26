@@ -10,13 +10,16 @@ import {
   SET_LOADING_OFF, 
   SET_ERROR_MESSAGE, 
   SORT_INGREDIENT_IN_ORDER,
-  SET_INGREDIENT_DETAILS
+  SET_INGREDIENT_DETAILS,
+  SET_LOADING_ON
   } from '../actions';
 
 const isLoading = (state = true, action) => {
   switch (action.type) {
     case SET_LOADING_OFF:
       return false;
+    case SET_LOADING_ON: 
+      return true;
     default:
       return state;
   }

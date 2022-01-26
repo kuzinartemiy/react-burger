@@ -59,10 +59,12 @@ export const getIngredients = () => {
 
 export const sendOrder = (ingredients) => {
   return (dispatch) => {
+    dispatch({ type: SET_LOADING_ON });
     Api.sendOrder(ingredients)
       .then(res => {
         if(res.success) {
           dispatch({type: SEND_ORDER, payload: res});
+          dispatch({ type: SET_LOADING_OFF });
         } else {
           throw Error(res);
         }
@@ -73,7 +75,8 @@ export const sendOrder = (ingredients) => {
         setTimeout(() => {
           dispatch(setErrorMessage(''));
         }, 3000);
-      });
+      })
+      .finally(() => dispatch({ type: SET_LOADING_OFF}));
   }
 };
 
