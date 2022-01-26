@@ -15,7 +15,7 @@ export const SORT_INGREDIENT_IN_ORDER = 'MOVE_INSIDE_CONSTRUCTOR';
 export const SEND_ORDER = 'SEND_ORDER';
 export const CLEAR_ORDER_INFO = 'CLEAR_ORDER_INFO';
 
-export const SET_ERROR_MESSAGE = 'SHOW_ERROR_MESSAGE';
+export const SET_ERROR_MESSAGE = 'SET_ERROR_MESSAGE';
 
 const addIngredients = (ingredients) => {
   return {
@@ -42,6 +42,8 @@ export const getIngredients = () => {
         if(res.success) {
           dispatch(addIngredients(res.data));
           dispatch(setLoading(false));
+        } else {
+          throw Error(res);
         }
       })
       .catch(error => {
@@ -57,7 +59,13 @@ export const getIngredients = () => {
 export const sendOrder = (ingredients) => {
   return (dispatch) => {
     Api.sendOrder(ingredients)
-      .then(res => res.success && dispatch({type: SEND_ORDER, payload: res}))
+      .then(res => {
+        if(res.success) {
+          dispatch({type: SEND_ORDER, payload: res});
+        } else {
+          throw Error(res);
+        }
+      })
       .catch(error => {
         console.log(`SEND_ORDER_ERROR: ${error}`);
         dispatch(setErrorMessage('Ошибка при отправке заказа.'));
