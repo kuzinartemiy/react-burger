@@ -1,4 +1,5 @@
 import Api from '../../utils/api';
+import { nanoid } from 'nanoid';
 
 export const SET_LOADING_OFF = 'SET_LOADING_OFF';
 export const SET_LOADING_ON = 'SET_LOADING_ON';
@@ -84,6 +85,7 @@ export const closeModals = () => {
 };
 
 export const addIngredientToOrder = (ingredient) => {
+  ingredient.customId = nanoid(10);
   return {
     type: ADD_INGREDIENT_TO_ORDER,
     payload: ingredient,

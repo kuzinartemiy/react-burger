@@ -1,6 +1,5 @@
 import thunk from 'redux-thunk';
 import { combineReducers, createStore, compose, applyMiddleware } from 'redux';
-import { nanoid } from 'nanoid';
 import { 
   ADD_INGREDIENT_TO_ORDER,
   CLEAR_INGREDIENT_DETAILS,
@@ -63,7 +62,6 @@ const selectedIngredients = (state = initialSelectedIngredientsState, action) =>
       if(action.payload.type === 'bun') {
         return {...state, bun: action.payload};
       } else {
-        action.payload.customId = nanoid(10);
         return {...state, ingredients: [...state.ingredients, {...action.payload}]};
       }
     case SORT_INGREDIENT_IN_ORDER:
