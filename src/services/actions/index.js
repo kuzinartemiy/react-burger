@@ -59,7 +59,7 @@ export const getIngredients = () => {
 
 export const sendOrder = (ingredients) => {
   return (dispatch) => {
-    dispatch({ type: SET_LOADING_ON });
+    dispatch(setLoading(true));
     Api.sendOrder(ingredients)
       .then(res => {
         if(res.success) {
@@ -76,7 +76,7 @@ export const sendOrder = (ingredients) => {
           dispatch(setErrorMessage(''));
         }, 3000);
       })
-      .finally(() => dispatch({ type: SET_LOADING_OFF}));
+      .finally(() => dispatch(setLoading(false)));
   }
 };
 
