@@ -1,9 +1,11 @@
 import styles from './DraggableConstructElement.module.css';
+import PropTypes from 'prop-types';
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 import { useRef } from "react";
 import { useDrag, useDrop } from 'react-dnd';
 import { useDispatch, useSelector } from "react-redux";
 import { sortIngredientInOrder } from "../../services/actions";
+import { IngredientType } from '../../utils/types';
 
 export const DraggableConstructElement = ({ ingredient, handleDeleteIngredient, index }) => {
   const { selectedIngredients } = useSelector(store => ({
@@ -60,4 +62,10 @@ export const DraggableConstructElement = ({ ingredient, handleDeleteIngredient, 
       </div>
     </li>
   )
+}
+
+DraggableConstructElement.propTypes = {
+  ingredient: PropTypes.shape(IngredientType).isRequired,
+  handleDeleteIngredient: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired,
 }

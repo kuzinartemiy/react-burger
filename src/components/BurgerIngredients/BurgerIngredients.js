@@ -1,10 +1,8 @@
 import styles from './BurgerIngredients.module.css';
-import PropTypes from 'prop-types';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useMemo, useState, useRef } from 'react';
 import { IngredientsList } from '../IngredientsList/IngredientsList';
-import { IngredientType } from '../../utils/types';
 import { useSelector } from 'react-redux';
 
 export const BurgerIngredients = () => {
@@ -67,7 +65,3 @@ export const BurgerIngredients = () => {
     </div>
   )
 }
-
-BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(PropTypes.shape(IngredientType).isRequired).isRequired,
-};

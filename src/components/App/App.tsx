@@ -56,7 +56,7 @@ function App(): JSX.Element {
           {ingredients.length !== 0 &&
             <DndProvider backend={HTML5Backend}>
               <div className={styles.appWrapper}>
-                <BurgerIngredients ingredients={ingredients} />
+                <BurgerIngredients />
                 <BurgerConstructor sendOrder={sendOrderHandler}/>
               </div>
             </DndProvider>
