@@ -1,60 +1,48 @@
+import styles from './App.module.css';
+
+import { useEffect } from 'react';
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+
+import { closeModals, getIngredients, sendOrder } from '../../services/actions';
+
 import { AppHeader } from '../AppHeader/AppHeader';
 import { BurgerConstructor } from '../BurgerConstructor/BurgerConstructor';
-import { BurgerIngredients } from '../BurgerIngredients/BurgerIngredients';
 import { Modal } from '../Modal/Modal';
 import { OrderDetails } from '../OrderDetails/OrderDetails';
 import { IngredientDetails } from '../IngredientDetails/IngredientDetails';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
-
-import { SetStateAction, useEffect, useState } from 'react';
-import styles from './App.module.css';
-import Api from '../../utils/api';
-import { IngredientsContext } from '../../services/ingredientsContext';
 import { Loader } from '../Loader/Loader';
+import { BurgerIngredients } from '../BurgerIngredients/BurgerIngredients';
 
-function App() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [ingredients, setIngredients] = useState([]);
-  const [selectedIngredient, setSelectedIngredient] = useState({});
-  const [orderId, setOrderId] = useState(0);
-  const [errorMessage, setErrorMessage] = useState('');
-
+function App(): JSX.Element {
+  const dispatch = useDispatch();
+  
+  const { ingredients, 
+    ingredientDetails, 
+    orderDetails,
+    isLoading,
+    errorMessage,
+  } = useSelector((store: RootStateOrAny) => ({
+    ingredients: store.ingredients,
+    ingredientDetails: store.ingredientDetails,
+    orderDetails: store.orderDetails,
+    isLoading: store.isLoading,
+    errorMessage: store.errorMessage
+  }))
+  
   const closeModal = () => {
-    setSelectedIngredient({})
-    setOrderId(0);
-  }
-
-  const showErrorMessage = (error: SetStateAction<string>) => {
-    setErrorMessage(error);
-    setTimeout(() => {
-      setErrorMessage('');
-    }, 3000);
+    dispatch(closeModals());
   }
 
   const sendOrderHandler = (ingredients: Array<string>) => {
-    Api.sendOrder(ingredients)
-      .then(res => res.success && setOrderId(res.order.number))
-      .catch(error => {
-        console.log(`SEND_ORDER_ERROR: ${error}`);
-        showErrorMessage('Ошибка при отправке заказа.');
-      });
-  }
-
-  const openIngredientInfoModal = (ingredient: SetStateAction<object>) => {
-    setSelectedIngredient(ingredient);
+    dispatch(sendOrder(ingredients));
   }
 
   useEffect(() => {
-    Api.getIngredients()
-      .then(res => {
-        setIngredients(res.data);
-        setIsLoading(false);
-      })
-      .catch(error => {
-        console.log(`GET_INGREDIENTS_ERROR: ${error}`);
-        showErrorMessage('Ошибка при получении данных.');
-      });
-      // eslint-disable-next-line
+    dispatch(getIngredients());
+      //eslint-disable-next-line
   }, [])
   
   return (
@@ -66,23 +54,23 @@ function App() {
         : 
         <>
           {ingredients.length !== 0 &&
-            <div className={styles.appWrapper}>
-              <BurgerIngredients ingredients={ingredients} openModal={openIngredientInfoModal}/>
-              <IngredientsContext.Provider value={ingredients}>
+            <DndProvider backend={HTML5Backend}>
+              <div className={styles.appWrapper}>
+                <BurgerIngredients />
                 <BurgerConstructor sendOrder={sendOrderHandler}/>
-              </IngredientsContext.Provider>
-            </div>
+              </div>
+            </DndProvider>
           }
           
-          {orderId !== 0 && 
+          {orderDetails && 
             <Modal closeModal={closeModal}>
-              <OrderDetails orderId={orderId}/>
+              <OrderDetails />
             </Modal>
           }
     
-          {Object.keys(selectedIngredient).length !== 0 && 
+          {ingredientDetails &&
             <Modal closeModal={closeModal}>
-              <IngredientDetails ingredient={selectedIngredient}/>
+              <IngredientDetails ingredient={ingredientDetails}/>
             </Modal>
           }
     

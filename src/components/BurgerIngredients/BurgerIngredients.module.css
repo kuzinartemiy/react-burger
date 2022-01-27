@@ -15,6 +15,7 @@
 .burgerIngredients__tabsContent {
   width: 100%;
   overflow: auto;
+  position: relative;
 }
 
 .burgerIngredients__tabsContent::-webkit-scrollbar {

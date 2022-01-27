@@ -1,67 +1,100 @@
 import styles from './BurgerConstructor.module.css';
-import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { useContext, useState, useMemo } from 'react';
-import { IngredientsContext } from '../../services/ingredientsContext';
+import { useMemo } from 'react';
+import { useDrop } from 'react-dnd';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { addIngredientToOrder, deleteIngredientFromOrder } from '../../services/actions';
+import { DraggableConstructElement } from '../DraggableConstructElement/DraggableConstructElement';
+import burgerLogo from '../../images/burgerLogo.svg';
 
 export const BurgerConstructor = ({ sendOrder }) => {
-  const ingredients = useContext(IngredientsContext);
-  const [selectedBun, setSelectedBun] = useState(ingredients.find(ingredient => ingredient.type === 'bun'));
-  const [selectedIngredients, setSelectedIngredients] = useState(ingredients.filter(ingredient => ingredient.type !== 'bun'));
+  const dispatch = useDispatch();
 
-  const totalOrderPrice = useMemo(
-    () => selectedIngredients.reduce((acc, ingredient) => acc + ingredient.price, selectedBun.price),
-    [selectedBun, selectedIngredients]
-  )
-
+  const { selectedIngredients, selectedBun } = useSelector(store => ({
+    selectedIngredients: store.selectedIngredients.ingredients,
+    selectedBun: store.selectedIngredients.bun,
+  }))
+  
+  const totalOrderPrice = useMemo(() => {
+    const initialPrice = selectedBun.price ? selectedBun.price : 0;
+    if(selectedIngredients.length) {
+      return selectedIngredients.reduce((acc, ingredient) => acc + ingredient.price, initialPrice);
+    } else {
+      return initialPrice;
+    }
+  },[selectedBun, selectedIngredients])
+  
+  const isOrderCorrect = selectedIngredients.length !== 0 && Object.keys(selectedBun).length !== 0;
+  
   const handleSendOrder = () => {
     const ingredientsIds = [selectedBun._id];
     selectedIngredients.forEach(ingredient => ingredientsIds.push(ingredient._id));
     sendOrder(ingredientsIds);
   }
 
+  const handleDeleteIngredient = (customId) => {
+    dispatch(deleteIngredientFromOrder(customId));
+  }
+
+  const [{isHover}, dropTarget] = useDrop({
+    accept: 'ingredient',
+    drop(ingredient) {
+      dispatch(addIngredientToOrder(ingredient));
+    },
+    collect: monitor => ({
+      isHover: monitor.isOver(),
+    })
+  });
+
+  const boxShadow = isHover ? '0px 0px 8px 4px rgba(128, 26, 178, 0.7)' : 'none';
+
   return (
     <div className={styles.burgerConstructor}>
-      <div className={styles.burgerConstructor__elementWrapper}>
-        <ConstructorElement
-          isLocked={true}
-          type='top'
-          text={`${selectedBun.name} (верх)`}
-          price={selectedBun.price}
-          thumbnail={selectedBun.image}
-        />
-      </div>
-
-      <ul className={styles.burgerConstructor__ingredients}>
-        {selectedIngredients.map(ingredient => {
-          return (
-            <li key={ingredient._id} className={styles.burgerConstructor__ingredient}>
-              <DragIcon type="primary" />
+              
+        <div style={{boxShadow}} ref={dropTarget} className={styles.burgerConstructor__constructorWrapper}>
+            <div className={styles.burgerConstructor__elementWrapper}>
               <ConstructorElement
-                text={ingredient.name}
-                price={ingredient.price}
-                thumbnail={ingredient.image}
+                isLocked={true}
+                type='top'
+                text={Object.keys(selectedBun).length !== 0 ? `${selectedBun.name} (верх)` : 'Выберите булочку'}
+                price={Object.keys(selectedBun).length !== 0 ? selectedBun.price : 0}
+                thumbnail={Object.keys(selectedBun).length !== 0 ? selectedBun.image : burgerLogo}
               />
-            </li>
-          )
-        })}
-      </ul>
+            </div>
 
-      <div className={styles.burgerConstructor__elementWrapper}>
-        <ConstructorElement
-          isLocked={true}
-          type='bottom'
-          text={`${selectedBun.name} (низ)`}
-          price={selectedBun.price}
-          thumbnail={selectedBun.image}
-        />
-      </div>
+            {selectedIngredients.length !== 0 &&
+              <ul className={styles.burgerConstructor__ingredients}>
+                {selectedIngredients.map((ingredient, index) => {
+                  return (
+                    <DraggableConstructElement
+                      key={ingredient.customId}
+                      handleDeleteIngredient={handleDeleteIngredient} 
+                      ingredient={ingredient} 
+                      index={index}
+                    />
+                  )
+                })}
+              </ul>
+            }
 
+            <div className={styles.burgerConstructor__elementWrapper}>
+              <ConstructorElement
+                isLocked={true}
+                type='bottom'
+                text={Object.keys(selectedBun).length !== 0 ? `${selectedBun.name} (низ)` : 'Выберите булочку'}
+                price={Object.keys(selectedBun).length !== 0 ? selectedBun.price : 0}
+                thumbnail={Object.keys(selectedBun).length !== 0 ? selectedBun.image : burgerLogo}
+              />
+            </div>
+        </div>
+      
       <div className={styles.burgerConstructor__totalSubmit}>
         <p className="text text_type_digits-medium">
           {totalOrderPrice}<CurrencyIcon type="primary" />
         </p>
-        <Button onClick={handleSendOrder} type="primary" size="large">Оформить заказ</Button>
+        <Button disabled={!isOrderCorrect} onClick={handleSendOrder} type="primary" size="large">Оформить заказ</Button>
       </div>
     </div>
   )

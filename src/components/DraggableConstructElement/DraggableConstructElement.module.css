@@ -1,0 +1,10 @@
+.DraggableConstructElement {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.DraggableConstructElement__wrapper {
+  display: flex;
+  border-radius: 64px;
+}
