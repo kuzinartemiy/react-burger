@@ -6,16 +6,23 @@ import {
   CLEAR_ORDER_INFO,
   DELETE_INGREDIENT_FROM_ORDER,
   GET_INGREDIENTS,
-  SEND_ORDER, 
-  SET_LOADING_OFF, 
   SET_ERROR_MESSAGE, 
   SORT_INGREDIENT_IN_ORDER,
   SET_INGREDIENT_DETAILS,
   SET_LOADING_ON,
-  CLEAR_INGREDIENTS_IN_ORDER
-  } from '../actions';
+  SET_LOADING_OFF,
+  CLEAR_INGREDIENTS_IN_ORDER,
+  SET_ORDER_DETAILS
+} from '../constants';
+import { TIngredientType } from '../../services/types';
+import { IOrderDetails, ISetErrorMessage, ISetLoading } from '../actions';
 
-const isLoading = (state = true, action) => {
+export type TInitialSelectedIngredientsState = {
+  ingredients: Array<TIngredientType>;
+  bun: object;
+}
+
+const isLoading = (state: boolean = true, action: ISetLoading) => {
   switch (action.type) {
     case SET_LOADING_OFF:
       return false;
@@ -26,7 +33,7 @@ const isLoading = (state = true, action) => {
   }
 }
 
-const errorMessage = (state = '', action) => {
+const errorMessage = (state: string = '', action: ISetErrorMessage) => {
   switch (action.type) {
     case SET_ERROR_MESSAGE:
       return action.payload;
@@ -35,7 +42,7 @@ const errorMessage = (state = '', action) => {
   }
 }
 
-const ingredients = (state = [], action) => {
+const ingredients = (state: [] = [], action: any) => {
   switch (action.type) {
     case GET_INGREDIENTS:
       return action.payload;
@@ -44,7 +51,7 @@ const ingredients = (state = [], action) => {
   }
 }
 
-const ingredientDetails = (state = null, action) => {
+const ingredientDetails = (state: null = null, action: any) => {
   switch (action.type) {
     case SET_INGREDIENT_DETAILS:
       return action.payload;
@@ -55,12 +62,12 @@ const ingredientDetails = (state = null, action) => {
   }
 }
 
-const initialSelectedIngredientsState = {
+const initialSelectedIngredientsState: TInitialSelectedIngredientsState = {
   ingredients: [],
   bun: {}
 }
 
-const selectedIngredients = (state = initialSelectedIngredientsState, action) => {
+const selectedIngredients = (state = initialSelectedIngredientsState, action: any) => {
   switch (action.type) {
     case ADD_INGREDIENT_TO_ORDER:
       if(action.payload.type === 'bun') {
@@ -82,12 +89,12 @@ const selectedIngredients = (state = initialSelectedIngredientsState, action) =>
   }
 }
 
-const orderDetails = (state = null, action) => {
-  switch (action.type) {
-    case SEND_ORDER: 
+const orderDetails = (state = null, action: IOrderDetails) => {
+  switch(action.type) {
+    case SET_ORDER_DETAILS:
       return action.payload;
     case CLEAR_ORDER_INFO:
-      return null
+      return null;
     default:
       return state;
   }
@@ -97,9 +104,10 @@ const rootReducer = combineReducers({
   ingredients,
   ingredientDetails,
   selectedIngredients,
-  orderDetails,
+  // sendOrder,
   isLoading,
   errorMessage,
+  orderDetails,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

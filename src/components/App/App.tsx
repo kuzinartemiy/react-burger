@@ -1,7 +1,7 @@
 import styles from './App.module.css';
 
 import { useEffect } from 'react';
-import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
@@ -24,7 +24,7 @@ function App(): JSX.Element {
     orderDetails,
     isLoading,
     errorMessage,
-  } = useSelector((store: RootStateOrAny) => ({
+  } = useSelector((store) => ({
     ingredients: store.ingredients,
     ingredientDetails: store.ingredientDetails,
     orderDetails: store.orderDetails,
@@ -70,7 +70,7 @@ function App(): JSX.Element {
     
           {ingredientDetails &&
             <Modal closeModal={closeModal}>
-              <IngredientDetails ingredient={ingredientDetails}/>
+              <IngredientDetails />
             </Modal>
           }
     

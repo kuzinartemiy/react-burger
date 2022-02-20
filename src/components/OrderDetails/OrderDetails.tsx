@@ -1,14 +1,14 @@
 import styles from './OrderDetails.module.css';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 
-export const OrderDetails = () => {
-  const { orderData } = useSelector(store => ({
-    orderData: store.orderDetails
+export const OrderDetails = (): JSX.Element => {
+  const { orderDetails } = useSelector(store => ({
+    orderDetails: store.orderDetails
   }))
-
+  
   return (
     <div className={styles.orderDetails__сontent}>
-      <p className={`text text_type_digits-large ${styles.orderDetails__orderNumber}`}>{orderData.order.number}</p>
+      <p className={`text text_type_digits-large ${styles.orderDetails__orderNumber}`}>{orderDetails.order.number}</p>
       <p className={`text text_type_main-medium ${styles.orderDetails__text}`}>идентификатор заказа</p>
       <div className={styles.orderDetails__doneIcon}/>
       <p className="text text_type_main-default">Ваш заказ начали готовить</p>

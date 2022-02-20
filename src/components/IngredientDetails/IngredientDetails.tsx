@@ -1,8 +1,13 @@
+import { useSelector } from '../../services/hooks';
 import styles from './IngredientDetails.module.css';
-import PropTypes from 'prop-types';
-import { IngredientType } from '../../utils/types';
 
-export const IngredientDetails = ({ingredient}) => {
+export const IngredientDetails = (): JSX.Element => {
+  const {ingredient} = useSelector(store => ({
+    ingredient: store.ingredientDetails
+  }))
+  
+  console.log(ingredient);
+
   return (
     <>
       <p className={`text text_type_main-large ${styles.ingredientDetDetails__title}`}>Детали ингредиента</p>
@@ -30,8 +35,4 @@ export const IngredientDetails = ({ingredient}) => {
       </div>
     </>
   )
-}
-
-IngredientDetails.propTypes = {
-  ingredient: PropTypes.shape(IngredientType).isRequired,
 }

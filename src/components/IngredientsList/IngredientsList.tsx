@@ -1,10 +1,9 @@
 import styles from './IngredientsList.module.css';
 import { IngredientCard } from "../IngredientCard/IngredientCard"
-import PropTypes from 'prop-types';
-import { IngredientType } from '../../utils/types';
 import { forwardRef } from 'react';
+import { IIngredientListProps } from './IngredientsList.props';
 
-export const IngredientsList = forwardRef(({ title, ingredients }, ref) => {
+export const IngredientsList = forwardRef<HTMLDivElement, IIngredientListProps>(({ title, ingredients }, ref): JSX.Element => {
   const ingredientId = ingredients[0].type + 's';
 
   return (
@@ -22,8 +21,3 @@ export const IngredientsList = forwardRef(({ title, ingredients }, ref) => {
     </div>
   )
 })
-
-IngredientsList.propTypes = {
-  title: PropTypes.string.isRequired,
-  ingredients: PropTypes.arrayOf(PropTypes.shape(IngredientType).isRequired).isRequired,
-};
