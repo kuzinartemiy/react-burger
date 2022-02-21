@@ -150,7 +150,7 @@ export const getIngredients: AppThunk = () => {
   };
 };
 
-export const sendOrder: AppThunk = (ingredients: Array<TIngredientType>) => {
+export const sendOrder: AppThunk = (ingredients: Array<string>) => {
   return (dispatch: AppDispatch) => {
     dispatch(setLoading(true));
     Api.sendOrder(ingredients)

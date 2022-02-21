@@ -19,10 +19,6 @@ export type TIngredientType = {
   customId?: string;
 }
 
-export interface Order {
-  number: number;
-}
-
 export type TOrderDetails = {
   success: boolean;
   name: string;
@@ -34,6 +30,12 @@ export type TOrderDetails = {
 export type TInitialSelectedIngredientsState = {
   ingredients: Array<TIngredientType>;
   bun: TIngredientType;
+}
+
+export type TApiConstructorType = {
+  baseUrl: string;
+  ingredientsEndPoint: string;
+  ordersEndPoint: string;
 }
 
 export type AppDispatch = typeof store.dispatch;

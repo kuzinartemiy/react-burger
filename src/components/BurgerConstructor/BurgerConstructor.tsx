@@ -27,7 +27,7 @@ export const BurgerConstructor = ({ sendOrder }: TBurgerConstructorProps): JSX.E
     }
   },[selectedBun, selectedIngredients])
   
-  const isOrderCorrect = selectedIngredients.length !== 0 && Object.keys(selectedBun).length !== 0;
+  const isOrderCorrect = selectedIngredients.length !== 0 && selectedBun._id !== '';
   
   const handleSendOrder = () => {
     const ingredientsIds = [selectedBun._id];
