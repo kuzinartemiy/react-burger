@@ -66,12 +66,8 @@ export interface IIngredientDetails {
   readonly payload?: TIngredientType;
 }
 
-export interface ISelectedIngredients {
-  readonly type: typeof ADD_INGREDIENT_TO_ORDER 
-  | typeof SORT_INGREDIENT_IN_ORDER 
-  | typeof DELETE_INGREDIENT_FROM_ORDER 
-  | typeof CLEAR_INGREDIENTS_IN_ORDER;
-  readonly payload?: TIngredientType | string;
+export interface IClearIngredientsInOrder {
+  readonly type: typeof CLEAR_INGREDIENTS_IN_ORDER;
 }
 
 export type TIngredientsActions = 
@@ -83,8 +79,7 @@ export type TIngredientsActions =
   | ISortIngredientInOrder
   | ISetIngredientDetails
   | IOrderDetails
-  | IIngredients
-  | ISelectedIngredients;
+  | IIngredients;
 
 export const addIngredientToOrder = (ingredient: TIngredientType): IAddIngredientToOrder => {
   ingredient.customId = nanoid(10);

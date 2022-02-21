@@ -59,9 +59,9 @@ export const BurgerConstructor = ({ sendOrder }: TBurgerConstructorProps): JSX.E
               <ConstructorElement
                 isLocked={true}
                 type='top'
-                text={Object.keys(selectedBun).length !== 0 ? `${selectedBun.name} (верх)` : 'Выберите булочку'}
-                price={Object.keys(selectedBun).length !== 0 ? selectedBun.price : 0}
-                thumbnail={Object.keys(selectedBun).length !== 0 ? selectedBun.image : burgerLogo}
+                text={selectedBun.name ? `${selectedBun.name} (верх)` : 'Выберите булочку'}
+                price={selectedBun.price ? selectedBun.price : 0}
+                thumbnail={selectedBun.image ? selectedBun.image : burgerLogo}
               />
             </div>
 
@@ -84,9 +84,9 @@ export const BurgerConstructor = ({ sendOrder }: TBurgerConstructorProps): JSX.E
               <ConstructorElement
                 isLocked={true}
                 type='bottom'
-                text={Object.keys(selectedBun).length !== 0 ? `${selectedBun.name} (низ)` : 'Выберите булочку'}
-                price={Object.keys(selectedBun).length !== 0 ? selectedBun.price : 0}
-                thumbnail={Object.keys(selectedBun).length !== 0 ? selectedBun.image : burgerLogo}
+                text={selectedBun.name ? `${selectedBun.name} (низ)` : 'Выберите булочку'}
+                price={selectedBun.price ? selectedBun.price : 0}
+                thumbnail={selectedBun.image ? selectedBun.image : burgerLogo}
               />
             </div>
         </div>

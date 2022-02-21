@@ -15,7 +15,7 @@ import {
   SET_ORDER_DETAILS
 } from '../constants';
 import { TIngredientType, TInitialSelectedIngredientsState, TOrderDetails } from '../../services/types';
-import { IIngredientDetails, IIngredients, IOrderDetails, ISelectedIngredients, ISetErrorMessage, ISetLoading } from '../actions';
+import { IAddIngredientToOrder, IClearIngredientsInOrder, IDeleteIngredientFromOrder, IIngredientDetails, IIngredients, IOrderDetails, ISetErrorMessage, ISetLoading, ISortIngredientInOrder } from '../actions';
 
 const isLoading = (state: boolean = true, action: ISetLoading) => {
   switch (action.type) {
@@ -95,31 +95,24 @@ const initialSelectedIngredientsState: TInitialSelectedIngredientsState = {
   }
 }
 
-const selectedIngredients = (state: TInitialSelectedIngredientsState = initialSelectedIngredientsState, action: ISelectedIngredients) => {
+const selectedIngredients = (
+    state: TInitialSelectedIngredientsState = initialSelectedIngredientsState, 
+    action: IAddIngredientToOrder | ISortIngredientInOrder | IDeleteIngredientFromOrder | IClearIngredientsInOrder
+  ) => {
   switch (action.type) {
     case ADD_INGREDIENT_TO_ORDER:
-      if(action.payload && typeof action.payload === 'object' && action.payload.type === 'bun') {
+      if(action.payload.type === 'bun') {
         return {...state, bun: action.payload};
-      } else if(typeof action.payload === 'object') {
-        return {...state, ingredients: [...state.ingredients, {...action.payload}]};
       } else {
-        return state;
+        return {...state, ingredients: [...state.ingredients, {...action.payload}]};
       }
     case SORT_INGREDIENT_IN_ORDER:
-      if(action.payload) {
-        return {...state, ingredients: action.payload}
-      } else {
-        return state;
-      }
+      return {...state, ingredients: action.payload}
     case DELETE_INGREDIENT_FROM_ORDER:
-      if(typeof action.payload === 'string') {
-        return {
+      return {
           ...state,
           ingredients: [...state.ingredients.filter((ingredient: TIngredientType) => ingredient.customId !== action.payload)]
-        };
-      } else {
-        return state;
-      }
+      };
     case CLEAR_INGREDIENTS_IN_ORDER:
       return initialSelectedIngredientsState;
     default:
