@@ -14,7 +14,7 @@ import {
   CLEAR_INGREDIENTS_IN_ORDER,
   SET_ORDER_DETAILS
 } from '../constants';
-import { TIngredientType } from '../../services/types';
+import { TIngredientType, TOrderDetails } from '../../services/types';
 import { IOrderDetails, ISetErrorMessage, ISetLoading } from '../actions';
 
 export type TInitialSelectedIngredientsState = {
@@ -89,12 +89,20 @@ const selectedIngredients = (state = initialSelectedIngredientsState, action: an
   }
 }
 
-const orderDetails = (state = null, action: IOrderDetails) => {
+const orderDetailsInitialState = {
+  success: false,
+  name: '',
+  order: {
+    number: 0,
+  },
+}
+
+const orderDetails = (state: TOrderDetails = orderDetailsInitialState, action: IOrderDetails) => {
   switch(action.type) {
     case SET_ORDER_DETAILS:
       return action.payload;
     case CLEAR_ORDER_INFO:
-      return null;
+      return orderDetailsInitialState;
     default:
       return state;
   }
@@ -104,7 +112,6 @@ const rootReducer = combineReducers({
   ingredients,
   ingredientDetails,
   selectedIngredients,
-  // sendOrder,
   isLoading,
   errorMessage,
   orderDetails,

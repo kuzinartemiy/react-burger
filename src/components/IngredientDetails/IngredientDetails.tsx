@@ -5,9 +5,6 @@ export const IngredientDetails = (): JSX.Element => {
   const {ingredient} = useSelector(store => ({
     ingredient: store.ingredientDetails
   }))
-  
-  console.log(ingredient);
-
   return (
     <>
       <p className={`text text_type_main-large ${styles.ingredientDetDetails__title}`}>Детали ингредиента</p>

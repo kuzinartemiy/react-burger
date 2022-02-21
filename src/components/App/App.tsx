@@ -62,7 +62,7 @@ function App(): JSX.Element {
             </DndProvider>
           }
           
-          {orderDetails && 
+          {orderDetails.success && 
             <Modal closeModal={closeModal}>
               <OrderDetails />
             </Modal>
