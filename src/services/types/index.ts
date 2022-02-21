@@ -33,7 +33,7 @@ export type TOrderDetails = {
 
 export type TInitialSelectedIngredientsState = {
   ingredients: Array<TIngredientType>;
-  bun: object;
+  bun: TIngredientType;
 }
 
 export type AppDispatch = typeof store.dispatch;

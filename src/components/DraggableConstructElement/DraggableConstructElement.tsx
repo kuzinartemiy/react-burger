@@ -53,12 +53,15 @@ export const DraggableConstructElement = ({ ingredient, handleDeleteIngredient, 
     <li ref={ref} className={styles.DraggableConstructElement}>
       <DragIcon type="primary" />
       <div style={{boxShadow}} className={styles.DraggableConstructElement__wrapper}>
-        <ConstructorElement
-          text={ingredient.name}
-          price={ingredient.price}
-          thumbnail={ingredient.image}
-          handleClose={() => handleDeleteIngredient(ingredient.customId)}
-        />
+        {ingredient &&         
+          <ConstructorElement
+            text={ingredient.name}
+            price={ingredient.price}
+            thumbnail={ingredient.image}
+            handleClose={() => handleDeleteIngredient(ingredient.customId)}
+          />
+        }
+
       </div>
     </li>
   )
