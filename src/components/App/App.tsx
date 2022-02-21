@@ -53,7 +53,7 @@ function App(): JSX.Element {
         <Loader />
         : 
         <>
-          {ingredients.length !== 0 &&
+          {ingredients.length &&
             <DndProvider backend={HTML5Backend}>
               <div className={styles.appWrapper}>
                 <BurgerIngredients />
@@ -68,7 +68,7 @@ function App(): JSX.Element {
             </Modal>
           }
     
-          {ingredientDetails &&
+          {ingredientDetails.name &&
             <Modal closeModal={closeModal}>
               <IngredientDetails />
             </Modal>

@@ -15,7 +15,7 @@ import {
   SET_ORDER_DETAILS
 } from '../constants';
 import { TIngredientType, TOrderDetails } from '../../services/types';
-import { IIngredients, IOrderDetails, ISetErrorMessage, ISetLoading } from '../actions';
+import { IIngredientDetails, IIngredients, IOrderDetails, ISetErrorMessage, ISetLoading } from '../actions';
 
 export type TInitialSelectedIngredientsState = {
   ingredients: Array<TIngredientType>;
@@ -42,21 +42,6 @@ const errorMessage = (state: string = '', action: ISetErrorMessage) => {
   }
 }
 
-// const ingredientsInitialState = {
-//   _id: '',
-//   name: '',
-//   type: '',
-//   proteins: 0,
-//   fat: 0,
-//   carbohydrates: 0,
-//   calories: 0,
-//   price: 0,
-//   image: '',
-//   image_mobile: '',
-//   image_large: '',
-//   __v: 0,
-// }
-
 const ingredients = (state: Array<TIngredientType> = [], action: IIngredients) => {
   switch (action.type) {
     case GET_INGREDIENTS:
@@ -66,12 +51,31 @@ const ingredients = (state: Array<TIngredientType> = [], action: IIngredients) =
   }
 }
 
-const ingredientDetails = (state: null = null, action: any) => {
+const ingredientDetailsInitialState = {
+  _id: '',
+  name: '',
+  type: '',
+  proteins: 0,
+  fat: 0,
+  carbohydrates: 0,
+  calories: 0,
+  price: 0,
+  image: '',
+  image_mobile: '',
+  image_large: '',
+  __v: 0,
+}
+
+const ingredientDetails = (state: TIngredientType = ingredientDetailsInitialState, action: IIngredientDetails) => {
   switch (action.type) {
     case SET_INGREDIENT_DETAILS:
-      return action.payload;
+      if(action.payload) {
+        return action.payload;
+      } else {
+        return ingredientDetailsInitialState;
+      }
     case CLEAR_INGREDIENT_DETAILS:
-      return null;
+      return ingredientDetailsInitialState;
     default:
       return state;
   }

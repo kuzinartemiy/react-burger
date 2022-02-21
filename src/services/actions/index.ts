@@ -61,6 +61,11 @@ export interface IIngredients {
   readonly payload: Array<TIngredientType>;
 }
 
+export interface IIngredientDetails {
+  readonly type: typeof SET_INGREDIENT_DETAILS | typeof CLEAR_INGREDIENT_DETAILS;
+  readonly payload?: TIngredientType;
+}
+
 export type TIngredientsActions = 
   | IAddIngredients
   | ISetLoading
