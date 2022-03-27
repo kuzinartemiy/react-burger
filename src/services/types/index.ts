@@ -1,7 +1,7 @@
-import { Action, ActionCreator } from "redux";
-import { ThunkAction } from "redux-thunk";
-import { TIngredientsActions } from "../actions";
-import { store } from "../reducers";
+import { Action, ActionCreator } from 'redux';
+import { ThunkAction } from 'redux-thunk';
+import { TIngredientsActions } from '../actions';
+import { store } from '../reducers';
 
 export type TIngredientType = {
   _id: string;
@@ -36,6 +36,20 @@ export type TApiConstructorType = {
   baseUrl: string;
   ingredientsEndPoint: string;
   ordersEndPoint: string;
+  resetPasswordEndPoint: string;
+  setNewPasswordEndPoint: string;
+  registerUserEndPoint: string;
+  loginEndPoint: string;
+  resetRefreshTokenEndPoint: string;
+  logoutEndPoint: string;
+  userEndPoint: string;
+}
+
+export type TUserType = {
+  user: {
+    email: string;
+    name: string;
+  };
 }
 
 export type AppDispatch = typeof store.dispatch;

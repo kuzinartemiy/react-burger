@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { compose } from 'redux';
 import { store } from './services/reducers';
 import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 
 declare global {
   interface Window {
@@ -13,14 +14,13 @@ declare global {
   }
 }
 
-// const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-// const store = createStore(rootReducer, composeEnhancers());
-
 ReactDOM.render(
   <React.StrictMode>
+    <BrowserRouter>
       <Provider store={store}>
-      <App />
-    </Provider>
+        <App />
+      </Provider>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );

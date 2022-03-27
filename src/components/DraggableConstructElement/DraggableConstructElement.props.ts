@@ -1,4 +1,4 @@
-import { TIngredientType } from "../../services/types";
+import { TIngredientType } from '../../services/types';
 
 export interface IDraggableConstructElementProps {
   ingredient: TIngredientType;

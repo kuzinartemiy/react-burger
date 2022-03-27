@@ -1,0 +1,19 @@
+.page404 {
+  box-sizing: border-box;
+  padding: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 100px;
+}
+
+.page404__image {
+  background-image: url(404.png);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  min-height: calc(100vh - 500px);
+  
+}

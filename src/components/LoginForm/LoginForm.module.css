@@ -1,0 +1,21 @@
+.loginForm {
+  margin-top: 180px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.loginForm__header {
+  align-self: center;
+}
+
+.loginForm__caption {
+  display: flex;
+  gap: 8px;
+}
+
+.loginForm__link {
+  text-decoration: none;
+  color: #4C4CFF;
+}

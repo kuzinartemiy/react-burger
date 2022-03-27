@@ -1,8 +1,4 @@
-.appWrapper {
-  padding-bottom: 40px;
+.app__ingredientDetailsWrapper {
   box-sizing: border-box;
-  display: grid;
-  grid-template-columns: 600px 600px;
-  gap: 40px;
-  justify-content: center;
+  padding: 120px;
 }
