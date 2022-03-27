@@ -303,7 +303,6 @@ export const getUser = () => (dispatch: AppDispatch) => {
     .catch((error) => {
       if (error.status === 403) {
         dispatch(resetRefreshToken(getUser));
-        dispatch(getUser());
       } else if (error.status === 401) {
         dispatch(setErrorMessage('Ошибка авторизации.'));
         setTimeout(() => {
@@ -324,14 +323,13 @@ export const updateUser = (data: {name: string, email: string, password: string}
   const { name, email, password } = data;
   Api.updateUser(name, email, password)
     .then((res) => {
-      if (res.ok) {
+      if (res.success) {
         dispatch(setUserData(res.user));
       }
     })
     .catch((error) => {
       if (error.status === 403) {
         dispatch(resetRefreshToken(updateUser(data)));
-        dispatch(updateUser(data));
       }
       console.log(`GET_USER_ERROR: ${error}`);
       dispatch(setErrorMessage('Ошибка при получении данных пользователя.'));
