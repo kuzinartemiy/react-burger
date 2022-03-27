@@ -16,23 +16,27 @@ export const EditProfileForm = () => {
   }));
 
   const [formValue, setFormValue] = useState({
-    name: user.name,
-    email: user.email,
+    name: user?.name || '',
+    email: user?.email || '',
     password: '',
   });
 
   const checkFormEdited = () => {
-    const isNameEdited = formValue.name !== user.name;
-    const isEmailEdited = formValue.email !== user.email;
-    const isPasswordEdited = formValue.password !== '';
+    if (user) {
+      const isNameEdited = formValue.name !== user.name;
+      const isEmailEdited = formValue.email !== user.email;
+      const isPasswordEdited = formValue.password !== '';
 
-    return (isNameEdited || isEmailEdited || isPasswordEdited);
+      return (isNameEdited || isEmailEdited || isPasswordEdited);
+    }
+
+    return false;
   };
 
   const resetForm = () => {
     setFormValue({
-      name: user.name,
-      email: user.email,
+      name: user.name || '',
+      email: user.email || '',
       password: '',
     });
   };
@@ -42,9 +46,9 @@ export const EditProfileForm = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    setFormValue({
-      name: user.name,
-      email: user.email,
+    user && setFormValue({
+      name: user.name || '',
+      email: user.email || '',
       password: '',
     });
   }, [user]);
