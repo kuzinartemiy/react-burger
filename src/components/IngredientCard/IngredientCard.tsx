@@ -1,13 +1,13 @@
 import styles from './IngredientCard.module.css';
-import PropTypes from 'prop-types';
 import { useDrag } from 'react-dnd';
 import { useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { IngredientType } from '../../utils/types';
 import { setIngredientDetails } from '../../services/actions';
+import { IIngredientCardProps } from './IngredientCard.props';
+import { TIngredientType } from '../../services/types';
 
-export const IngredientCard = ({ ingredient }) => {
+export const IngredientCard = ({ ingredient }: IIngredientCardProps) => {
   const dispatch = useDispatch();
 
   const {selectedIngredients} = useSelector(store => ({
@@ -15,7 +15,7 @@ export const IngredientCard = ({ ingredient }) => {
   }))
 
   const inOrderCount = useMemo(() => {
-    return selectedIngredients.filter(selectedIngredient => selectedIngredient._id === ingredient._id).length;
+    return selectedIngredients.filter((selectedIngredient: TIngredientType) => selectedIngredient._id === ingredient._id).length;
   }, [selectedIngredients, ingredient._id]);
 
   const openIngredientDetailsModal = () => {
@@ -37,8 +37,4 @@ export const IngredientCard = ({ ingredient }) => {
       <p className="text text_type_main-default">{ingredient.name}</p>
     </li>
   )
-}
-
-IngredientCard.propTypes = {
-  ingredient: PropTypes.shape(IngredientType).isRequired,
 }

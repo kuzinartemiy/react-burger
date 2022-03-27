@@ -1,9 +1,15 @@
-const URL_API = 'https://norma.nomoreparties.space/api';
-const INGREDIENTS = '/ingredients';
-const ORDERS = '/orders';
+import { TApiConstructorType } from "../services/types";
+
+const URL_API: 'https://norma.nomoreparties.space/api' = 'https://norma.nomoreparties.space/api';
+const INGREDIENTS: '/ingredients' = '/ingredients';
+const ORDERS: '/orders' = '/orders';
 
 class Api {
-  constructor({ baseUrl, ingredientsEndPoint, ordersEndPoint }) {
+  _baseUrl: string;
+  _ingredientsEndPoint: string;
+  _ordersEndPoint: string;
+  _headers: { 'Content-Type': string; };
+  constructor({ baseUrl, ingredientsEndPoint, ordersEndPoint }: TApiConstructorType) {
     this._baseUrl = baseUrl;
     this._ingredientsEndPoint = ingredientsEndPoint;
     this._ordersEndPoint = ordersEndPoint;
@@ -12,7 +18,7 @@ class Api {
     };
   }
 
-  _getResponseData(res) {
+  _getResponseData(res: Response) {
     if (!res.ok) {
       return Promise.reject(`Ошибка: ${res.status}`);
     }
@@ -27,7 +33,7 @@ class Api {
       .then(this._getResponseData);
   }
 
-  sendOrder(ingredients) {
+  sendOrder(ingredients: Array<string>) {
     return fetch(`${this._baseUrl}${this._ordersEndPoint}`, {
       method: 'POST',
       headers: this._headers,

@@ -1,15 +1,16 @@
 import styles from './BurgerConstructor.module.css';
-import PropTypes from 'prop-types';
 import { useMemo } from 'react';
 import { useDrop } from 'react-dnd';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 
 import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { addIngredientToOrder, deleteIngredientFromOrder } from '../../services/actions';
 import { DraggableConstructElement } from '../DraggableConstructElement/DraggableConstructElement';
 import burgerLogo from '../../images/burgerLogo.svg';
+import { TBurgerConstructorProps } from './BurgerConstructor.props';
+import { TIngredientType } from '../../services/types';
 
-export const BurgerConstructor = ({ sendOrder }) => {
+export const BurgerConstructor = ({ sendOrder }: TBurgerConstructorProps): JSX.Element => {
   const dispatch = useDispatch();
 
   const { selectedIngredients, selectedBun } = useSelector(store => ({
@@ -20,27 +21,27 @@ export const BurgerConstructor = ({ sendOrder }) => {
   const totalOrderPrice = useMemo(() => {
     const initialPrice = selectedBun.price ? selectedBun.price : 0;
     if(selectedIngredients.length) {
-      return selectedIngredients.reduce((acc, ingredient) => acc + ingredient.price, initialPrice);
+      return selectedIngredients.reduce((acc: number, ingredient: TIngredientType) => acc + ingredient.price, initialPrice);
     } else {
       return initialPrice;
     }
   },[selectedBun, selectedIngredients])
   
-  const isOrderCorrect = selectedIngredients.length !== 0 && Object.keys(selectedBun).length !== 0;
+  const isOrderCorrect = selectedIngredients.length !== 0 && selectedBun._id !== '';
   
   const handleSendOrder = () => {
     const ingredientsIds = [selectedBun._id];
-    selectedIngredients.forEach(ingredient => ingredientsIds.push(ingredient._id));
+    selectedIngredients.forEach((ingredient: TIngredientType) => ingredientsIds.push(ingredient._id));
     sendOrder(ingredientsIds);
   }
 
-  const handleDeleteIngredient = (customId) => {
+  const handleDeleteIngredient = (customId: string) => {
     dispatch(deleteIngredientFromOrder(customId));
   }
 
   const [{isHover}, dropTarget] = useDrop({
     accept: 'ingredient',
-    drop(ingredient) {
+    drop(ingredient: TIngredientType) {
       dispatch(addIngredientToOrder(ingredient));
     },
     collect: monitor => ({
@@ -58,15 +59,15 @@ export const BurgerConstructor = ({ sendOrder }) => {
               <ConstructorElement
                 isLocked={true}
                 type='top'
-                text={Object.keys(selectedBun).length !== 0 ? `${selectedBun.name} (верх)` : 'Выберите булочку'}
-                price={Object.keys(selectedBun).length !== 0 ? selectedBun.price : 0}
-                thumbnail={Object.keys(selectedBun).length !== 0 ? selectedBun.image : burgerLogo}
+                text={selectedBun.name ? `${selectedBun.name} (верх)` : 'Выберите булочку'}
+                price={selectedBun.price ? selectedBun.price : 0}
+                thumbnail={selectedBun.image ? selectedBun.image : burgerLogo}
               />
             </div>
 
             {selectedIngredients.length !== 0 &&
               <ul className={styles.burgerConstructor__ingredients}>
-                {selectedIngredients.map((ingredient, index) => {
+                {selectedIngredients.map((ingredient: TIngredientType, index: number) => {
                   return (
                     <DraggableConstructElement
                       key={ingredient.customId}
@@ -83,9 +84,9 @@ export const BurgerConstructor = ({ sendOrder }) => {
               <ConstructorElement
                 isLocked={true}
                 type='bottom'
-                text={Object.keys(selectedBun).length !== 0 ? `${selectedBun.name} (низ)` : 'Выберите булочку'}
-                price={Object.keys(selectedBun).length !== 0 ? selectedBun.price : 0}
-                thumbnail={Object.keys(selectedBun).length !== 0 ? selectedBun.image : burgerLogo}
+                text={selectedBun.name ? `${selectedBun.name} (низ)` : 'Выберите булочку'}
+                price={selectedBun.price ? selectedBun.price : 0}
+                thumbnail={selectedBun.image ? selectedBun.image : burgerLogo}
               />
             </div>
         </div>
@@ -98,8 +99,4 @@ export const BurgerConstructor = ({ sendOrder }) => {
       </div>
     </div>
   )
-}
-
-BurgerConstructor.propTypes = {
-  sendOrder: PropTypes.func.isRequired,
 }

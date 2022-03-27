@@ -2,13 +2,13 @@ import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { ModalOverlay } from '../ModalOverlay/ModalOverlay';
 import styles from './Modal.module.css';
-import PropTypes from 'prop-types';
+import { IModalProps } from './Modal.props';
 
-export const Modal = ({closeModal, children}) => {
-  const rootModal = document.getElementById('root-modal');
+export const Modal = ({ closeModal, children }: IModalProps): JSX.Element | null => {
+  const rootModal: HTMLElement | null = document.getElementById('root-modal');
 
   useEffect(() => {
-    const closeModalByEsc = (e) => {
+    const closeModalByEsc = (e: KeyboardEvent) => {
       e.key === 'Escape' && closeModal();
     }
 
@@ -19,7 +19,7 @@ export const Modal = ({closeModal, children}) => {
     }
   }, [closeModal])
 
-  return createPortal(
+  return rootModal && createPortal(
     <div className={styles.modal__wrapper}>
       <div className={styles.modal}>
         <button className={styles.modal__closeBtn} onClick={closeModal}/>
@@ -28,9 +28,4 @@ export const Modal = ({closeModal, children}) => {
       <ModalOverlay closeModal={closeModal}/>
     </div>
   , rootModal)
-}
-
-Modal.propTypes = {
-  closeModal: PropTypes.func.isRequired,
-  children: PropTypes.element.isRequired,
 }

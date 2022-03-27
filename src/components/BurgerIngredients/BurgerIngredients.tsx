@@ -1,27 +1,28 @@
 import styles from './BurgerIngredients.module.css';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useMemo, useState, useRef } from 'react';
+import { useMemo, useState, useRef, RefObject, UIEvent } from 'react';
 import { IngredientsList } from '../IngredientsList/IngredientsList';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
+import { TIngredientType } from '../../services/types';
 
-export const BurgerIngredients = () => {
+export const BurgerIngredients = ():JSX.Element => {
   const { ingredients } = useSelector(store => ({
     ingredients: store.ingredients,
   }));
   
   const [current, setCurrent] = useState('buns');
   
-  const bunsRef = useRef(null);
-  const saucesRef = useRef(null);
-  const mainsRef = useRef(null);
+  const bunsRef = useRef<HTMLDivElement>(null);
+  const saucesRef = useRef<HTMLDivElement>(null);
+  const mainsRef = useRef<HTMLDivElement>(null);
 
-  const scrollHandler = (evt) => {
-    const scrollContainer = evt.target;
-    const scrollPosition = scrollContainer.scrollTop;
-    
-    const saucesSectionPosition = saucesRef.current.offsetTop;
-    const mainsSectionPosition = mainsRef.current.offsetTop;
+  const scrollHandler = (evt: UIEvent<HTMLDivElement>) => {
+    evt.stopPropagation();
+    const scrollPosition = evt.currentTarget.scrollTop;
+
+    const saucesSectionPosition: number = saucesRef.current ? saucesRef.current.offsetTop : 0;
+    const mainsSectionPosition: number = mainsRef.current ? mainsRef.current.offsetTop : 0;
 
     if(scrollPosition + 40 >= mainsSectionPosition) {
       setCurrent('mains')
@@ -32,14 +33,14 @@ export const BurgerIngredients = () => {
     };
   }
 
-  const clickTabHandler = (value, element) => {
+  const clickTabHandler = (value: string, element: RefObject<HTMLDivElement>) => {
     setCurrent(value);
-    element.current.scrollIntoView({ behavior: 'smooth'});
+    element.current && element.current.scrollIntoView({ behavior: 'smooth'});
   }
 
-  const buns = useMemo(() => ingredients.filter(ingredient => ingredient.type === 'bun'), [ingredients]);
-  const sauces = useMemo(() => ingredients.filter(ingredient => ingredient.type === 'sauce'), [ingredients]);
-  const mains = useMemo(() => ingredients.filter(ingredient => ingredient.type === 'main'), [ingredients]);
+  const buns = useMemo(() => ingredients.filter((ingredient: TIngredientType) => ingredient.type === 'bun'), [ingredients]);
+  const sauces = useMemo(() => ingredients.filter((ingredient: TIngredientType) => ingredient.type === 'sauce'), [ingredients]);
+  const mains = useMemo(() => ingredients.filter((ingredient: TIngredientType) => ingredient.type === 'main'), [ingredients]);
 
   return (
     <div className={styles.burgerIngredients}>
