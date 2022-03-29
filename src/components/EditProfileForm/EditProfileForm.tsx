@@ -4,7 +4,7 @@ import {
 import {
   SyntheticEvent, useEffect, useState,
 } from 'react';
-import { getUser, updateUser } from '../../services/actions';
+import { getUser, updateUser } from '../../services/actions/user';
 import { useDispatch, useSelector } from '../../services/hooks';
 import styles from './EditProfileForm.module.css';
 

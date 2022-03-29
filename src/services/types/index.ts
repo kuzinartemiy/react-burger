@@ -1,6 +1,6 @@
 import { Action, ActionCreator } from 'redux';
 import { ThunkAction } from 'redux-thunk';
-import { TIngredientsActions } from '../actions';
+import { TIngredientsActions } from '../actions/interfaces';
 import { store } from '../reducers';
 
 export type TIngredientType = {

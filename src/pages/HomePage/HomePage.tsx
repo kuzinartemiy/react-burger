@@ -3,13 +3,18 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { BurgerConstructor } from '../../components/BurgerConstructor/BurgerConstructor';
 import { Loader } from '../../components/Loader/Loader';
 import { BurgerIngredients } from '../../components/BurgerIngredients/BurgerIngredients';
-import { useSelector } from '../../services/hooks';
+import { useDispatch, useSelector } from '../../services/hooks';
 import styles from './HomePage.module.css';
+import { OrderDetails } from '../../components/OrderDetails/OrderDetails';
+import { Modal } from '../../components/Modal/Modal';
+import { setOrderDetails } from '../../services/actions/ingredients';
 
 export const HomePage = () => {
-  const { ingredients, isLoading } = useSelector((store) => ({
+  const dispatch = useDispatch();
+  const { ingredients, isLoading, orderDetails } = useSelector((store) => ({
     ingredients: store.ingredients,
     isLoading: store.isLoading,
+    orderDetails: store.orderDetails,
   }));
 
   return (
@@ -26,6 +31,12 @@ export const HomePage = () => {
                 <BurgerConstructor />
               </div>
             </DndProvider>
+            )}
+            {orderDetails
+            && (
+              <Modal extCloseModal={() => dispatch(setOrderDetails(null))}>
+                <OrderDetails />
+              </Modal>
             )}
           </div>
         )}

@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { useDrag } from 'react-dnd';
 import { useMemo } from 'react';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -10,11 +11,11 @@ import { TIngredientType } from '../../services/types';
 export const IngredientCard = ({ ingredient }: IIngredientCardProps) => {
   const location = useLocation();
 
-  const { selectedIngredients } = useSelector((store) => ({
+  const { selectedIngredients, selectedBun } = useSelector((store) => ({
     selectedIngredients: store.selectedIngredients.ingredients,
+    selectedBun: store.selectedIngredients.bun,
   }));
 
-  // eslint-disable-next-line max-len
   const inOrderCount = useMemo(() => selectedIngredients.filter((selectedIngredient: TIngredientType) => selectedIngredient._id === ingredient._id).length, [selectedIngredients, ingredient._id]);
 
   const [, dragRef] = useDrag({
@@ -31,7 +32,8 @@ export const IngredientCard = ({ ingredient }: IIngredientCardProps) => {
         }}
         className={styles.ingredientCard__link}
       >
-        {inOrderCount !== 0 && <div className={styles.ingredientCard__count}><p className="text text_type_digits-default">{inOrderCount}</p></div>}
+        {inOrderCount !== 0 && <div className={styles.ingredientCard__count}><p className="text text_type_digits-default">{ingredient === selectedBun ? 1 : inOrderCount}</p></div>}
+        {ingredient === selectedBun && <div className={styles.ingredientCard__count}><p className="text text_type_digits-default">1</p></div>}
         <img className={styles.ingredientCard__image} src={ingredient.image} alt={ingredient.image} />
         <div className={styles.ingredientCard__price}>
           <p className="text text_type_digits-default">{ingredient.price}</p>

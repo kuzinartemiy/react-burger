@@ -5,12 +5,12 @@ import { ModalOverlay } from '../ModalOverlay/ModalOverlay';
 import styles from './Modal.module.css';
 import { IModalProps } from './Modal.props';
 
-export const Modal = ({ children }: IModalProps) => {
+export const Modal = ({ children, extCloseModal }: IModalProps) => {
   const rootModal: HTMLElement | null = document.getElementById('root-modal');
   const history = useHistory();
 
   const closeModal = () => {
-    history.goBack();
+    extCloseModal ? extCloseModal() : history.goBack();
   };
 
   useEffect(() => {

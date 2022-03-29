@@ -3,7 +3,7 @@ import {
   ChangeEvent, SyntheticEvent, useCallback, useState,
 } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { setNewPassword } from '../../services/actions';
+import { setNewPassword } from '../../services/actions/user';
 import { useDispatch } from '../../services/hooks';
 import styles from './ResetPasswordForm.module.css';
 

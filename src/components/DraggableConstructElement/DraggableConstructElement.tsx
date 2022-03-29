@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import styles from './DraggableConstructElement.module.css';
 import { useDispatch, useSelector } from '../../services/hooks';
-import { sortIngredientInOrder } from '../../services/actions';
+import { sortIngredientInOrder } from '../../services/actions/ingredients';
 import { IDraggableConstructElementProps } from './DraggableConstructElement.props';
 import { TIngredientType } from '../../services/types';
 

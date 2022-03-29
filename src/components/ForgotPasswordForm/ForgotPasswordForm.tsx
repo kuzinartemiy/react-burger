@@ -3,7 +3,7 @@ import {
   ChangeEvent, SyntheticEvent, useCallback, useState,
 } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { resetPassword } from '../../services/actions';
+import { resetPassword } from '../../services/actions/user';
 import { useDispatch } from '../../services/hooks';
 import styles from './ForgotPasswordForm.module.css';
 

@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import styles from './BurgerConstructor.module.css';
 import { useDispatch, useSelector } from '../../services/hooks';
 
-import { addIngredientToOrder, deleteIngredientFromOrder, sendOrder } from '../../services/actions';
+import { addIngredientToOrder, deleteIngredientFromOrder, sendOrder } from '../../services/actions/ingredients';
 import { DraggableConstructElement } from '../DraggableConstructElement/DraggableConstructElement';
 import burgerLogo from '../../images/burgerLogo.svg';
 import { TIngredientType } from '../../services/types';
@@ -14,7 +14,9 @@ export const BurgerConstructor = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const { isAuth, selectedIngredients, selectedBun } = useSelector((store) => ({
+  const {
+    isAuth, selectedIngredients, selectedBun,
+  } = useSelector((store) => ({
     selectedIngredients: store.selectedIngredients.ingredients,
     selectedBun: store.selectedIngredients.bun,
     isAuth: store.isAuth,

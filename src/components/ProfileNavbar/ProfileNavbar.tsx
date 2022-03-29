@@ -1,6 +1,6 @@
 import { SyntheticEvent } from 'react';
 import { NavLink } from 'react-router-dom';
-import { logout } from '../../services/actions';
+import { logout } from '../../services/actions/user';
 import { useDispatch } from '../../services/hooks';
 import styles from './ProfileNavbar.module.css';
 

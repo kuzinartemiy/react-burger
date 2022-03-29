@@ -1,9 +1,7 @@
 import { useEffect } from 'react';
 import { Switch, Route, useLocation } from 'react-router-dom';
 import styles from './App.module.css';
-
 import { useDispatch, useSelector } from '../../services/hooks';
-import { getIngredients, getUser } from '../../services/actions';
 import { AppHeader } from '../AppHeader/AppHeader';
 import { LoginPage } from '../../pages/LoginPage/LoginPage';
 import { RegisterPage } from '../../pages/RegisterPage/RegisterPage';
@@ -16,6 +14,8 @@ import { IngredientDetails } from '../IngredientDetails/IngredientDetails';
 import { Modal } from '../Modal/Modal';
 import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
+import { getIngredients } from '../../services/actions/ingredients';
+import { getUser } from '../../services/actions/user';
 
 function App() {
   const dispatch = useDispatch();
@@ -50,11 +50,11 @@ function App() {
       </Switch>
       {background
         && (
-        <Route exact path="/ingredients/:id">
-          <Modal>
-            <IngredientDetails />
-          </Modal>
-        </Route>
+          <Route exact path="/ingredients/:id">
+            <Modal>
+              <IngredientDetails />
+            </Modal>
+          </Route>
         )}
     </>
   );
