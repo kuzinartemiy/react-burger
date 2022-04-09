@@ -16,6 +16,8 @@ import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import { getIngredients } from '../../services/actions/ingredients';
 import { getUser } from '../../services/actions/user';
+import { FeedPage } from '../../pages/FeedPage/FeedPage';
+import { FeedOrderDetails } from '../FeedOrderDetails/FeedOrderDetails';
 
 function App() {
   const dispatch = useDispatch();
@@ -44,17 +46,30 @@ function App() {
         <Route exact path="/register" component={RegisterPage} />
         <Route exact path="/forgot-password" component={ForgotPasswordPage} />
         <Route exact path="/reset-password" component={ResetPasswordPage} />
-        <ProtectedRoute exact path="/profile" component={ProfilePage} />
-        <ProtectedRoute exact path="/profile/orders" component={ProfilePage} />
+        <Route exact path="/feed" component={FeedPage} />
+        <ProtectedRoute path="/profile" component={ProfilePage} />
+        <ProtectedRoute path="/profile/orders" component={ProfilePage} />
         <Route component={Page404} />
       </Switch>
       {background
         && (
-          <Route exact path="/ingredients/:id">
-            <Modal>
-              <IngredientDetails />
-            </Modal>
-          </Route>
+          <>
+            <Route exact path="/ingredients/:id">
+              <Modal>
+                <IngredientDetails />
+              </Modal>
+            </Route>
+            <Route exact path="/profile/orders/:id">
+              <Modal>
+                <FeedOrderDetails />
+              </Modal>
+            </Route>
+            <Route exact path="/feed/:id">
+              <Modal>
+                <FeedOrderDetails />
+              </Modal>
+            </Route>
+          </>
         )}
     </>
   );
