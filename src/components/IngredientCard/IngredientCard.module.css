@@ -10,6 +10,11 @@
   position: relative;
 }
 
+.ingredientCard__link {
+  text-decoration: none;
+  color: #F2F2F3;
+}
+
 .ingredientCard__count {
   width: 32px;
   height: 32px;
@@ -26,6 +31,7 @@
 .ingredientCard:hover {
   opacity: .9;
 }
+
 .ingredientCard__image {
   max-width: 240px;
 }

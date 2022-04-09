@@ -1,34 +1,39 @@
+import {
+  Logo, BurgerIcon, ListIcon, ProfileIcon,
+} from '@ya.praktikum/react-developer-burger-ui-components';
+import { Link, NavLink, useRouteMatch } from 'react-router-dom';
 import styles from './AppHeader.module.css';
-import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export const AppHeader = (): JSX.Element => {
+export const AppHeader = () => {
+  const onMainPage = useRouteMatch({ path: '/', exact: true });
+  const onFeedPage = useRouteMatch({ path: '/feed' });
+  const onProfilePage = useRouteMatch({ path: '/profile' });
+
   return (
     <header className={styles.header}>
       <nav className={styles.header__nav}>
-
         <ul className={styles.header__navLinks}>
           <li className={styles.header__navListItem}>
-            <a href="#" className={styles.header__link}>
-              <BurgerIcon type="primary" />
-              <p className="text text_type_main-default">Конструктор</p>
-            </a>
+            <NavLink exact to="/" className={styles.header__link} activeClassName={styles.header__link_active}>
+              <BurgerIcon type={onMainPage ? 'primary' : 'secondary'} />
+              <p className={`text text_type_main-default text_color_inactive ${styles.header__linkText}`}>Конструктор</p>
+            </NavLink>
           </li>
           <li className={styles.header__navListItem}>
-            <a href="#" className={styles.header__link}>
-              <ListIcon type="secondary" />
+            <NavLink to="/" className={styles.header__link}>
+              <ListIcon type={onFeedPage ? 'primary' : 'secondary'} />
               <p className="text text_type_main-default header__text text_color_inactive">Лента заказов</p>
-            </a>
+            </NavLink>
           </li>
         </ul>
 
-        <a href="#" className={styles.header__link}><Logo /></a>
-        
-        <a href="#" className={styles.header__profileLink}>
-          <ProfileIcon type="secondary" />
-          <p className="text text_type_main-default text_color_inactive">Личный кабинет</p>
-        </a>
+        <Link to="/" className={styles.header__link}><Logo /></Link>
+
+        <NavLink to="/profile" className={styles.header__profileLink} activeClassName={styles.header__profileLink_active}>
+          <ProfileIcon type={onProfilePage ? 'primary' : 'secondary'} />
+          <p className={`text text_type_main-default text_color_inactive ${styles.header__profileLinkText}`}>Личный кабинет</p>
+        </NavLink>
       </nav>
     </header>
-
-  )
-}
+  );
+};

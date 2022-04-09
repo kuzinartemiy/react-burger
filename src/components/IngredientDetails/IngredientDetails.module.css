@@ -5,10 +5,12 @@
 }
 
 .ingredientDetails__title {
+  text-align: center;
   align-self: flex-start;
 }
 
 .ingredientDetails__statsList {
+  padding: 0;
   margin-top: 32px;
   display: flex;
   list-style: none;

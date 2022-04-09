@@ -1,0 +1,26 @@
+.registerForm {
+  margin-top: 180px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.registerForm__header {
+  align-self: center;
+}
+
+.registerForm__caption {
+  display: flex;
+  gap: 8px;
+}
+
+.registerForm__link {
+  text-decoration: none;
+  color: #4C4CFF;
+  transition: .3s;
+}
+
+.registerForm__link:hover {
+  opacity: .8;
+}

@@ -1,6 +1,6 @@
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
 
 export interface IModalProps {
-  closeModal: () => void;
   children: ReactNode;
+  extCloseModal?: () => void;
 }

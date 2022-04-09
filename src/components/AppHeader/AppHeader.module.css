@@ -22,7 +22,6 @@
   align-items: center;
   justify-self: center;
   text-decoration: none;
-  color: #F2F2F3;
 }
 
 .header__link:hover {
@@ -55,7 +54,13 @@
 .header__text {
   margin-right: 20px;
 }
+
 .header__link p,
 .header__profileLink p {
   margin-left: 10px;
+}
+
+.header__profileLink_active .header__profileLinkText,
+.header__link_active .header__linkText {
+  color: #F2F2F3;
 }

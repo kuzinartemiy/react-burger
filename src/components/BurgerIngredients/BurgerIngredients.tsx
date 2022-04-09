@@ -1,18 +1,19 @@
-import styles from './BurgerIngredients.module.css';
-
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useMemo, useState, useRef, RefObject, UIEvent } from 'react';
+import {
+  useMemo, useState, useRef, RefObject, UIEvent,
+} from 'react';
+import styles from './BurgerIngredients.module.css';
 import { IngredientsList } from '../IngredientsList/IngredientsList';
 import { useSelector } from '../../services/hooks';
 import { TIngredientType } from '../../services/types';
 
-export const BurgerIngredients = ():JSX.Element => {
-  const { ingredients } = useSelector(store => ({
+export const BurgerIngredients = () => {
+  const { ingredients } = useSelector((store) => ({
     ingredients: store.ingredients,
   }));
-  
+
   const [current, setCurrent] = useState('buns');
-  
+
   const bunsRef = useRef<HTMLDivElement>(null);
   const saucesRef = useRef<HTMLDivElement>(null);
   const mainsRef = useRef<HTMLDivElement>(null);
@@ -24,19 +25,19 @@ export const BurgerIngredients = ():JSX.Element => {
     const saucesSectionPosition: number = saucesRef.current ? saucesRef.current.offsetTop : 0;
     const mainsSectionPosition: number = mainsRef.current ? mainsRef.current.offsetTop : 0;
 
-    if(scrollPosition + 40 >= mainsSectionPosition) {
-      setCurrent('mains')
-    } else if(scrollPosition + 40 >= saucesSectionPosition) {
-      setCurrent('sauces')
+    if (scrollPosition + 40 >= mainsSectionPosition) {
+      setCurrent('mains');
+    } else if (scrollPosition + 40 >= saucesSectionPosition) {
+      setCurrent('sauces');
     } else {
-      setCurrent('buns')
-    };
-  }
+      setCurrent('buns');
+    }
+  };
 
   const clickTabHandler = (value: string, element: RefObject<HTMLDivElement>) => {
     setCurrent(value);
-    element.current && element.current.scrollIntoView({ behavior: 'smooth'});
-  }
+    element.current && element.current.scrollIntoView({ behavior: 'smooth' });
+  };
 
   const buns = useMemo(() => ingredients.filter((ingredient: TIngredientType) => ingredient.type === 'bun'), [ingredients]);
   const sauces = useMemo(() => ingredients.filter((ingredient: TIngredientType) => ingredient.type === 'sauce'), [ingredients]);
@@ -45,7 +46,7 @@ export const BurgerIngredients = ():JSX.Element => {
   return (
     <div className={styles.burgerIngredients}>
       <h1 className="text text_type_main-large test">Соберите бургер</h1>
-      
+
       <div className={styles.burgerIngredients__tabs}>
         <Tab value="buns" active={current === 'buns'} onClick={(value) => clickTabHandler(value, bunsRef)}>
           Булки
@@ -64,5 +65,5 @@ export const BurgerIngredients = ():JSX.Element => {
         <IngredientsList ref={mainsRef} title="Начинки" ingredients={mains} />
       </div>
     </div>
-  )
-}
+  );
+};

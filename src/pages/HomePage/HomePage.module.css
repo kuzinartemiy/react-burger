@@ -1,0 +1,8 @@
+.homePage {
+  padding-bottom: 40px;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 600px 600px;
+  gap: 40px;
+  justify-content: center;
+}

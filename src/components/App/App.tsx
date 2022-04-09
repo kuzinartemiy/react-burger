@@ -1,83 +1,61 @@
-import styles from './App.module.css';
-
 import { useEffect } from 'react';
+import { Switch, Route, useLocation } from 'react-router-dom';
+import styles from './App.module.css';
 import { useDispatch, useSelector } from '../../services/hooks';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-
-import { closeModals, getIngredients, sendOrder } from '../../services/actions';
-
 import { AppHeader } from '../AppHeader/AppHeader';
-import { BurgerConstructor } from '../BurgerConstructor/BurgerConstructor';
-import { Modal } from '../Modal/Modal';
-import { OrderDetails } from '../OrderDetails/OrderDetails';
+import { LoginPage } from '../../pages/LoginPage/LoginPage';
+import { RegisterPage } from '../../pages/RegisterPage/RegisterPage';
+import { ForgotPasswordPage } from '../../pages/ForgotPasswordPage/ForgotPasswordPage';
+import { ResetPasswordPage } from '../../pages/ResetPasswordPage/ResetPasswordPage';
+import { ProfilePage } from '../../pages/ProfilePage/ProfilePage';
+import { HomePage } from '../../pages/HomePage/HomePage';
+import { Page404 } from '../../pages/404Page/404Page';
 import { IngredientDetails } from '../IngredientDetails/IngredientDetails';
+import { Modal } from '../Modal/Modal';
+import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
-import { Loader } from '../Loader/Loader';
-import { BurgerIngredients } from '../BurgerIngredients/BurgerIngredients';
+import { getIngredients } from '../../services/actions/ingredients';
+import { getUser } from '../../services/actions/user';
 
-function App(): JSX.Element {
+function App() {
   const dispatch = useDispatch();
-  
-  const { ingredients, 
-    ingredientDetails, 
-    orderDetails,
-    isLoading,
-    errorMessage,
-  } = useSelector((store) => ({
-    ingredients: store.ingredients,
-    ingredientDetails: store.ingredientDetails,
-    orderDetails: store.orderDetails,
-    isLoading: store.isLoading,
-    errorMessage: store.errorMessage
-  }))
-  
-  const closeModal = () => {
-    dispatch(closeModals());
-  }
+  const location = useLocation<any>();
 
-  const sendOrderHandler = (ingredients: Array<string>) => {
-    dispatch(sendOrder(ingredients));
-  }
+  const background = location.state && location.state.background;
+  const errorMessage = useSelector((store) => store.errorMessage);
 
   useEffect(() => {
     dispatch(getIngredients());
-      //eslint-disable-next-line
-  }, [])
-  
+    dispatch(getUser());
+  }, [dispatch]);
+
   return (
     <>
-      <AppHeader/>
-      {isLoading 
-        ? 
-        <Loader />
-        : 
-        <>
-          {ingredients.length &&
-            <DndProvider backend={HTML5Backend}>
-              <div className={styles.appWrapper}>
-                <BurgerIngredients />
-                <BurgerConstructor sendOrder={sendOrderHandler}/>
-              </div>
-            </DndProvider>
-          }
-          
-          {orderDetails && orderDetails.success && 
-            <Modal closeModal={closeModal}>
-              <OrderDetails />
-            </Modal>
-          }
-    
-          {ingredientDetails.name &&
-            <Modal closeModal={closeModal}>
+      <AppHeader />
+      {errorMessage && <ErrorMessage />}
+      <Switch location={background || location}>
+        <Route exact path="/" component={HomePage} />
+        <Route exact path="/ingredients/:id">
+          <div className={styles.app__ingredientDetailsWrapper}>
+            <IngredientDetails />
+          </div>
+        </Route>
+        <Route exact path="/login" component={LoginPage} />
+        <Route exact path="/register" component={RegisterPage} />
+        <Route exact path="/forgot-password" component={ForgotPasswordPage} />
+        <Route exact path="/reset-password" component={ResetPasswordPage} />
+        <ProtectedRoute exact path="/profile" component={ProfilePage} />
+        <ProtectedRoute exact path="/profile/orders" component={ProfilePage} />
+        <Route component={Page404} />
+      </Switch>
+      {background
+        && (
+          <Route exact path="/ingredients/:id">
+            <Modal>
               <IngredientDetails />
             </Modal>
-          }
-    
-        </>
-      }
-      
-      {errorMessage && <ErrorMessage errorMessage={errorMessage}/>}
+          </Route>
+        )}
     </>
   );
 }
