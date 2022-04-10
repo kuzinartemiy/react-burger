@@ -39,10 +39,7 @@ export const OrderCard: FC<IOrderCardProps> = ({ orderData, showStatus }) => {
       </div>
       <h2 className="text text_type_main-medium">{orderData.name}</h2>
       {showStatus && (
-        <p
-          style={orderData.status === 'done' ? { color: '#00CCCC' } : undefined}
-          className="text text_type_main-default"
-        >
+        <p className={`text text_type_main-default ${orderData.status === 'done' && styles.orderCard__status_done}`}>
             {status[orderData.status]}
         </p>
       )}

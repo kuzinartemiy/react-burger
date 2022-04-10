@@ -33,17 +33,17 @@ export const FeedPage = () => {
             <div className={styles.feedPage__ordersInfo}>
               <div className={styles.feedPage__ordersStatus}>
                 <div>
-                  <p style={{ marginBottom: '24px' }} className="text text_type_main-medium">Готовы:</p>
+                  <p className="text text_type_main-medium mb-6">Готовы:</p>
                   <ul className={styles.feedPage__ordersStatusList}>
                     {doneOrders && doneOrders.slice(0, 10).map((order: TOrderType) => (
                       <li key={order._id}>
-                        <p style={{ color: '#00CCCC' }} className="text text_type_digits-default">{order.number}</p>
+                        <p className={`text text_type_digits-default ${styles.feedPage__orderNumber_done}`}>{order.number}</p>
                       </li>
                     ))}
                   </ul>
                 </div>
                 <div>
-                  <p style={{ marginBottom: '24px' }} className="text text_type_main-medium">В работе:</p>
+                  <p className="text text_type_main-medium mb-6">В работе:</p>
                   <ul className={styles.feedPage__ordersStatusList}>
                     {pendingOrders && pendingOrders.map((order: TOrderType) => (
                       <li key={order._id}>

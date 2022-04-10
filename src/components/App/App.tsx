@@ -18,6 +18,7 @@ import { getIngredients } from '../../services/actions/ingredients';
 import { getUser } from '../../services/actions/user';
 import { FeedPage } from '../../pages/FeedPage/FeedPage';
 import { FeedOrderDetails } from '../FeedOrderDetails/FeedOrderDetails';
+import { OrderDetailsPage } from '../../pages/OrderDetailsPage/OrderDetailsPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -42,11 +43,13 @@ function App() {
             <IngredientDetails />
           </div>
         </Route>
+        <Route exact path="/feed/:id" component={OrderDetailsPage} />
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/register" component={RegisterPage} />
         <Route exact path="/forgot-password" component={ForgotPasswordPage} />
         <Route exact path="/reset-password" component={ResetPasswordPage} />
         <Route exact path="/feed" component={FeedPage} />
+        <ProtectedRoute path="/profile/orders/:id" component={OrderDetailsPage} />
         <ProtectedRoute path="/profile" component={ProfilePage} />
         <ProtectedRoute path="/profile/orders" component={ProfilePage} />
         <Route component={Page404} />

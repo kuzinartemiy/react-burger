@@ -2,3 +2,10 @@
   box-sizing: border-box;
   padding: 120px;
 }
+
+.app__orderDetailsWrapper {
+  box-sizing: border-box;
+  padding: 120px;
+  display: flex;
+  justify-content: center;
+}
