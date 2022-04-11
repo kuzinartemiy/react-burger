@@ -1,0 +1,6 @@
+.orderDetailsPage {
+  box-sizing: border-box;
+  padding: 120px;
+  display: flex;
+  justify-content: center;
+}

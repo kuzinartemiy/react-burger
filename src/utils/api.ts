@@ -80,7 +80,10 @@ class Api {
   sendOrder(ingredients: Array<string>) {
     return fetch(`${this._baseUrl}${this._ordersEndPoint}`, {
       method: 'POST',
-      headers: this._headers,
+      headers: {
+        ...this._headers,
+        authorization: `${localStorage.getItem('accessToken')}`,
+      },
       body: JSON.stringify({
         ingredients,
       }),

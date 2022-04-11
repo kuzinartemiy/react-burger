@@ -20,9 +20,9 @@ export const AppHeader = () => {
             </NavLink>
           </li>
           <li className={styles.header__navListItem}>
-            <NavLink to="/" className={styles.header__link}>
+            <NavLink to="/feed" className={styles.header__link} activeClassName={styles.header__profileLink_active}>
               <ListIcon type={onFeedPage ? 'primary' : 'secondary'} />
-              <p className="text text_type_main-default header__text text_color_inactive">Лента заказов</p>
+              <p className={`text text_type_main-default text_color_inactive ${styles.header__profileLinkText}`}>Лента заказов</p>
             </NavLink>
           </li>
         </ul>

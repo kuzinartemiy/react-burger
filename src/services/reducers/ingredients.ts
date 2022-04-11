@@ -2,13 +2,23 @@ import {
   IIngredients, IAddIngredientToOrder, ISortIngredientInOrder, IDeleteIngredientFromOrder, IClearIngredientsInOrder, IOrderDetails,
 } from '../actions/interfaces';
 import {
-  GET_INGREDIENTS, ADD_INGREDIENT_TO_ORDER, SORT_INGREDIENT_IN_ORDER, DELETE_INGREDIENT_FROM_ORDER, CLEAR_INGREDIENTS_IN_ORDER, SET_ORDER_DETAILS,
+  // eslint-disable-next-line max-len
+  GET_INGREDIENTS, ADD_INGREDIENT_TO_ORDER, SORT_INGREDIENT_IN_ORDER, DELETE_INGREDIENT_FROM_ORDER, CLEAR_INGREDIENTS_IN_ORDER, SET_ORDER_DETAILS, SET_WS_ORDERS,
 } from '../constants';
 import { TIngredientType, TInitialSelectedIngredientsState, TOrderDetails } from '../types';
 
 export const ingredients = (state: Array<TIngredientType> = [], action: IIngredients) => {
   switch (action.type) {
     case GET_INGREDIENTS:
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+export const feedOrders = (state: any = null, action: any) => {
+  switch (action.type) {
+    case SET_WS_ORDERS:
       return action.payload;
     default:
       return state;

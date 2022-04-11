@@ -52,6 +52,16 @@ export type TUserType = {
   };
 }
 
+export type TOrderType = {
+  _id: string;
+  ingredients: string[];
+  status: string;
+  name: string;
+  createdAt: Date;
+  updatedAt: Date;
+  number: number;
+}
+
 export type AppDispatch = typeof store.dispatch;
 
 export type RootState = ReturnType<typeof store.getState>;
