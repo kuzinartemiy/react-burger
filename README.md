@@ -1,6 +1,6 @@
 ### Приложение-космобургерная Stellar Burgers
 
-### [Stellar Burgers](https://kuzinartemiy.github.io/react-burger/)
+### [Stellar Burgers](https://react-burger-xi.vercel.app/)
 
 #### Реализовано:
 - Drag&Drop с применением библиотеки React DnD;
